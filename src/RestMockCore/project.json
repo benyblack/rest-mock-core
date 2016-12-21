@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "Microsoft.AspNetCore.Hosting": "1.0.0",
+    "Microsoft.AspNetCore.Server.Kestrel.Https": "1.0.0",
+    "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
+    "System.Linq": "4.3.0"
+  },
+
+ "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        }
+      }
+      }
+   }
+}
