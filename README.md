@@ -1,5 +1,5 @@
 # rest-mock-core
-A simple http server for using in test project which test .net core based projects.
+A simple http server for using in test projects which test .net core based projects.
 It tested with Visual Studio 2015 Update 3 and xUnit.
 
 ## Start
@@ -11,7 +11,7 @@ mockServer.Run();
 ```
 
 ## More
-There is some options to manage requests better:
+There are some options to manage requests better:
 ```
 mockServer.Config.Get("/test/123").Send("It Really Works!");
 mockServer.Config.Post("/havij/123").Send("It Not Works!", 503);
