@@ -14,7 +14,7 @@ mockServer.Run();
 There are some options to manage requests better:
 ```
 mockServer.Config.Get("/test/123").Send("It Really Works!");
-mockServer.Config.Post("/havij/123").Send("It Not Works!", 503);
+mockServer.Config.Post("/havij/123").Send("It is not working!", 503);
 ```
 
 For other details please check Test project.
