@@ -2,7 +2,11 @@
 A simple http server for using in test projects which test .net core based projects.
 It tested with Visual Studio 2015 Update 3 and xUnit.
 
-## Start
+## Problem
+When I started to write test for a netcore app, I realized that many of libraries do not work in that platform.
+One of my problem is to find an appropriate "Http Server Mock" library. Therefor I started to write this project.
+
+## Usage
 By default, the server will return "It Works!" by Ok status code (200).
 
 ```
