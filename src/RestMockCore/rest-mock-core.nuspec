@@ -9,8 +9,10 @@
     <projectUrl>https://github.com/benyblack/rest-mock-core</projectUrl>
     <!--<iconUrl>http://github.com/contoso/UsefulStuff/nuget_icon.png</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <title>rest-mock-core</title>
     <description>A simple http server for using in test projects which test .net core based projects. It was tested with Visual Studio 2015 Update 3 and xUnit.</description>
     <summary>A simple http server for using in test projects which test .net core based projects.</summary>
+    <releaseNotes>First public version</releaseNotes>
     <tags>c# .netcore asp.net-core unit-testing xunit</tags>
     <copyright>Copyright 2016</copyright>
     <dependencies>

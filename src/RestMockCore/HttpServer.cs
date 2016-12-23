@@ -11,27 +11,27 @@ namespace RestMockCore
 {
     public class HttpServer : IHttpServer
     {
-        IWebHost host;
-        int port = 5000;
+        IWebHost _host;
+        int _port = 5000;
 
         public IRequestBuilder Config { get; set; }
 
-        public HttpServer(int _port = 5000)
+        public HttpServer(int port = 5000)
         {
-            port = _port;
+            _port = port;
             Config = new RequestBuilder();
         }
         public void Run()
         {
             new Task(() =>
             {
-                host = new WebHostBuilder()
+                _host = new WebHostBuilder()
                    .UseKestrel(options =>
                    {
                        options.NoDelay = true;
                        options.UseConnectionLogging();
                    })
-                   .UseUrls("http://localhost:" + port.ToString())
+                   .UseUrls("http://localhost:" + _port.ToString())
                    .Configure(app =>
                    {
                        app.Run(async context =>
@@ -62,11 +62,9 @@ namespace RestMockCore
                        });
                    }).Build();
 
-                host.Run();
+                _host.Run();
 
             }).Start();
         }
-
-
     }
 }
