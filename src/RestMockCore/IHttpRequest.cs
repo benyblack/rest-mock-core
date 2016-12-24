@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace RestMockCore
 {
-   public interface IHttpRequest
+    public interface IHttpRequest
     {
-        HttpMethod Method { get; set; }
+        Dictionary<string, string> Headers { get; set; }
+        string Method { get; set; }
         string Url { get; set; }
-
     }
 }

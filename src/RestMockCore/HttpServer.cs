@@ -23,48 +23,75 @@ namespace RestMockCore
         }
         public void Run()
         {
-            new Task(() =>
-            {
-                _host = new WebHostBuilder()
-                   .UseKestrel(options =>
+            _host = new WebHostBuilder()
+               .UseKestrel(options =>
+               {
+                   options.NoDelay = true;
+                   options.UseConnectionLogging();
+               })
+               .UseUrls("http://localhost:" + _port.ToString())
+               .Configure(app =>
+               {
+                   app.Run(async context =>
                    {
-                       options.NoDelay = true;
-                       options.UseConnectionLogging();
-                   })
-                   .UseUrls("http://localhost:" + _port.ToString())
-                   .Configure(app =>
-                   {
-                       app.Run(async context =>
+                       string response = "It Works!";
+                       byte[] buffer = System.Text.Encoding.UTF8.GetBytes(response);
+                       if (Config.RouteTable != null && Config.RouteTable.Count > 0)
                        {
-                           if (Config.RouteTable != null && Config.RouteTable.Count > 0)
+                           RouteTableItem route = MatchedRoute(context);
+                           if (route != null)
                            {
-                               var routesByMethod = Config.RouteTable.Where(x => x.Method == context.Request.Method).ToList();
-                               foreach (var item in routesByMethod)
+                               response = route.Response.Body;
+                               context.Response.StatusCode = route.Response.StatusCode;
+                               if (route.Response.Headers != null)
                                {
-                                   if (item.Url == string.Format("{0}{1}", context.Request.Path, context.Request.QueryString))
+                                   foreach (var item in route.Response.Headers)
                                    {
-                                       string response = item.Response.Body;
-                                       context.Response.StatusCode = item.Response.StatusCode;
-                                       byte[] buffer = System.Text.Encoding.UTF8.GetBytes(response);
-                                       await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
-                                       break;
+                                       context.Response.Headers.Add(item.Key, item.Value);
                                    }
                                }
-                           }  
-                           else
-                           {
-                               var response = "It Works!";
-                               context.Response.ContentLength = response.Length;
-                               context.Response.ContentType = "text/plain";
-                               byte[] buffer = System.Text.Encoding.UTF8.GetBytes(response);
+                               buffer = System.Text.Encoding.UTF8.GetBytes(response);
                                await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+                               return;
                            }
-                       });
-                   }).Build();
+                       }
+                       context.Response.ContentLength = response.Length;
+                       context.Response.ContentType = "text/plain";
+                       await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+                   });
+               }).Build();
 
-                _host.Run();
+            _host.Start();
 
-            }).Start();
+        }
+
+        private RouteTableItem MatchedRoute(HttpContext context)
+        {
+            var routesByMethod = Config.RouteTable.Where(x => x.Request.Method == context.Request.Method).ToList();
+            foreach (var item in routesByMethod)
+            {
+                if (item.Request.Url == string.Format("{0}{1}", context.Request.Path, context.Request.QueryString))
+                {
+                    if (item.Request.Headers != null && item.Request.Headers.Count > 0)
+                    {
+
+                        foreach (var header in item.Request.Headers)
+                        {
+                            if (!context.Request.Headers.Keys.Contains(header.Key))
+                            {
+                                return null;
+                            }
+                            else if (context.Request.Headers[header.Key] != header.Value)
+                            {
+                                return null;
+                            }
+                        }
+
+                    }
+                    return item;
+                }
+            }
+            return null;
         }
     }
 }

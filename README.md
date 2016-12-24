@@ -4,30 +4,30 @@ It is tested with Visual Studio 2015 Update 3 and xUnit.
 
 ## Problem
 When I started to write test for a netcore app, I realized that many of libraries do not work in that platform.
-One of my problem is to find an appropriate "Http Server Mock" library. Therefor I started to write this project.
+One of my problems was to find an appropriate *Http Server Mock* library. Therefor I started to write this project.
 
 ## Install
-```
+```console
 Install-Package rest-mock-core
 ```
 ## Usage
 By default, the server will return "It Works!" by Ok status code (200).
 
-```
+```csharp
 HttpServer mockServer = new HttpServer();
 mockServer.Run();
 ```
 Then you can use any http client sending request to it.
 Default url is http://localhost:5000 which its port could be changed constructor:
 
-```
+```csharp
 HttpClient httpClient = new HttpClient(5001);
 ```
 
 
 ## More
 There are some options to manage requests better:
-```
+```csharp
 mockServer.Config.Get("/test/123").Send("It Really Works!");
 mockServer.Config.Post("/test2/123").Send("It is not working!", 503);
 ```
