@@ -9,21 +9,14 @@ using System.Linq;
 
 namespace RestMockCore.Test
 {
-    public class HttpServerTests : IDisposable
+    public class HttpServerTests
     {
         HttpServer mockServer;
-        public HttpServerTests()
-        {
-            mockServer = new HttpServer();
-        }
-
-        public void Dispose()
-        {
-        }
 
         [Fact]
         public async Task Test_general_functionality()
         {
+            mockServer = new HttpServer();
             mockServer.Run();
             await send_request(5000);
         }
@@ -35,7 +28,10 @@ namespace RestMockCore.Test
             mockServer.Run();
             await send_request(5001);
             HttpClient httpClient = new HttpClient();
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => { httpClient.GetAsync("http://localhost:5000/").RunSynchronously(); });
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() =>
+            {
+                httpClient.GetAsync("http://localhost:5000/").RunSynchronously();
+            });
             Assert.NotNull(ex);
 
         }
@@ -56,9 +52,18 @@ namespace RestMockCore.Test
             mockServer.Config.Get("/test/123").Send("It Really Works!");
             mockServer.Config.Post("/havij/123").Send("It Not Works!", 503);
             mockServer.Config.Put("/testput/456").Send("{'status':'isWorking'}", 200, headers);
+            mockServer.Config.Delete("/testdel/456").Send("Deleted", 200);
+            mockServer.Config.Get("/testAction/123").Send(context =>
+            {
+                context.Response.StatusCode = 200;
+                string response = "Action Test";
+                byte[] buffer = System.Text.Encoding.UTF8.GetBytes(response);
+                buffer = System.Text.Encoding.UTF8.GetBytes(response);
+                context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+            });
 
             Assert.NotNull(mockServer.Config);
-            Assert.Equal(3, mockServer.Config.RouteTable.Count);
+            Assert.Equal(5, mockServer.Config.RouteTable.Count);
 
             var responseGet = await httpClient.GetAsync(string.Format("http://localhost:{0}/test/123", port));
             Assert.Equal("It Really Works!", await responseGet.Content.ReadAsStringAsync());
@@ -77,6 +82,16 @@ namespace RestMockCore.Test
             Assert.Equal("application/json", responsePut.Content.Headers.GetValues("Content-Type").First());
             Assert.Equal("TestHeaderValue", responsePut.Headers.GetValues("testHeader").First());
             Assert.Equal(200, (int)responsePut.StatusCode);
+            //================================================================
+            HttpRequestMessage deleteMessage = new HttpRequestMessage(HttpMethod.Delete, string.Format("http://localhost:{0}/testdel/456", port));
+            var responseDelete = await httpClient.SendAsync(deleteMessage);
+            Assert.Equal("Deleted", await responseDelete.Content.ReadAsStringAsync());
+            Assert.Equal(200, (int)responseDelete.StatusCode);
+            //==========================================================
+            var responseGetAction = await httpClient.GetAsync(string.Format("http://localhost:{0}/testAction/123", port));
+            Assert.Equal("Action Test", await responseGetAction.Content.ReadAsStringAsync());
+            Assert.Equal(200, (int)responseGetAction.StatusCode);
+
         }
 
     }

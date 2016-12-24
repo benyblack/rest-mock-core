@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
 
 namespace RestMockCore
 {
@@ -7,5 +9,7 @@ namespace RestMockCore
         string Body { get; set; }
         Dictionary<string, string> Headers { get; set; }
         int StatusCode { get; set; }
+        Action<HttpContext> Handler { get; set; }
+
     }
 }

@@ -38,21 +38,36 @@ namespace RestMockCore
                        byte[] buffer = System.Text.Encoding.UTF8.GetBytes(response);
                        if (Config.RouteTable != null && Config.RouteTable.Count > 0)
                        {
-                           RouteTableItem route = MatchedRoute(context);
+                           RouteTableItem route = null;
+                           foreach (var item in Config.RouteTable)
+                           {
+                               if (item.IsMatch(context.Request))
+                               {
+                                   route = item;
+                               }
+                           }
                            if (route != null)
                            {
-                               response = route.Response.Body;
-                               context.Response.StatusCode = route.Response.StatusCode;
-                               if (route.Response.Headers != null)
+                               if (route.Response.Handler != null)
                                {
-                                   foreach (var item in route.Response.Headers)
-                                   {
-                                       context.Response.Headers.Add(item.Key, item.Value);
-                                   }
+                                   route.Response.Handler(context);
+                                   return;
                                }
-                               buffer = System.Text.Encoding.UTF8.GetBytes(response);
-                               await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
-                               return;
+                               else
+                               {
+                                   response = route.Response.Body;
+                                   context.Response.StatusCode = route.Response.StatusCode;
+                                   if (route.Response.Headers != null)
+                                   {
+                                       foreach (var item in route.Response.Headers)
+                                       {
+                                           context.Response.Headers.Add(item.Key, item.Value);
+                                       }
+                                   }
+                                   buffer = System.Text.Encoding.UTF8.GetBytes(response);
+                                   await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+                                   return;
+                               }
                            }
                        }
                        context.Response.ContentLength = response.Length;
@@ -65,33 +80,5 @@ namespace RestMockCore
 
         }
 
-        private RouteTableItem MatchedRoute(HttpContext context)
-        {
-            var routesByMethod = Config.RouteTable.Where(x => x.Request.Method == context.Request.Method).ToList();
-            foreach (var item in routesByMethod)
-            {
-                if (item.Request.Url == string.Format("{0}{1}", context.Request.Path, context.Request.QueryString))
-                {
-                    if (item.Request.Headers != null && item.Request.Headers.Count > 0)
-                    {
-
-                        foreach (var header in item.Request.Headers)
-                        {
-                            if (!context.Request.Headers.Keys.Contains(header.Key))
-                            {
-                                return null;
-                            }
-                            else if (context.Request.Headers[header.Key] != header.Value)
-                            {
-                                return null;
-                            }
-                        }
-
-                    }
-                    return item;
-                }
-            }
-            return null;
-        }
     }
 }
