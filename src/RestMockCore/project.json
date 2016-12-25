@@ -1,6 +1,25 @@
 {
-  "version": "0.2.1",
-
+  "version": "0.2.2",
+  "authors": [ "Behnam Yousefi" ],
+  "packOptions": {
+    //"id": "rest-mock-core",
+    //"name": "rest-mock-core",
+    "owners": [ "benyblack" ],
+    "summary": "A simple http server for using in test projects which test .net core based projects.",
+    "releaseNotes": "",
+    "tags": [ "c#", ".netcore", "asp.net-core", "unit-testing xunit" ],
+    "files": {
+      "include": "..\\..\\README.md"
+    },
+    "licenseUrl": "https://github.com/benyblack/rest-mock-core/blob/master/LICENSE",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/benyblack/rest-mock-core"
+    },
+    "requireLicenseAcceptance": false
+  },
+  "title": "rest-mock-core",
+  "description": "A simple http server for using in test projects which test .net core based projects. It was tested with Visual Studio 2015 Update 3 and xUnit.",
   "dependencies": {
     "Microsoft.AspNetCore.Hosting": "1.0.0",
     "Microsoft.AspNetCore.Server.Kestrel.Https": "1.0.0",
