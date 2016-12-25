@@ -2,11 +2,11 @@
   "version": "0.2.2",
   "authors": [ "Behnam Yousefi" ],
   "packOptions": {
-    //"id": "rest-mock-core",
+    "id": "rest-mock-core",
     //"name": "rest-mock-core",
     "owners": [ "benyblack" ],
     "summary": "A simple http server for using in test projects which test .net core based projects.",
-    "releaseNotes": "",
+    "releaseNotes": "Bug fixes",
     "tags": [ "c#", ".netcore", "asp.net-core", "unit-testing xunit" ],
     "files": {
       "include": "..\\..\\README.md"

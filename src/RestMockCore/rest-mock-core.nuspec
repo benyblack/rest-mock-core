@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>rest-mock-core</id>
-    <version>$version$</version>
+    <version>0.2.2</version>
     <authors>Behnam Yousefi</authors>
     <owners>benyblack</owners>
     <licenseUrl>https://github.com/benyblack/rest-mock-core/blob/master/LICENSE</licenseUrl>
@@ -13,8 +13,7 @@
     <description>A simple http server for using in test projects which test .net core based projects. It was tested with Visual Studio 2015 Update 3 and xUnit.</description>
     <summary>A simple http server for using in test projects which test .net core based projects.</summary>
     <releaseNotes>
-      - Action&lt;HttpContext&gt; added to Send method
-      - Properties change in RouteTableItem
+      Bug fixes
     </releaseNotes>
     <tags>c# .netcore asp.net-core unit-testing xunit</tags>
     <copyright>Copyright 2016</copyright>
