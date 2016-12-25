@@ -30,6 +30,14 @@ There are some options to manage requests better:
 ```csharp
 mockServer.Config.Get("/test/123").Send("It Really Works!");
 mockServer.Config.Post("/test2/123").Send("It is not working!", 503);
+mockServer.Config.Get("/testAction/123").Send(context =>
+            {
+                context.Response.StatusCode = 200;
+                string response = "Action Test";
+                byte[] buffer = System.Text.Encoding.UTF8.GetBytes(response);
+                buffer = System.Text.Encoding.UTF8.GetBytes(response);
+                context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+            });
 ```
 You can use server.Config either before or after server.Run()
 
