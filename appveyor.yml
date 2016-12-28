@@ -6,6 +6,10 @@ build_script:
   - ps: cd .\src\RestMockCore
   - ps: dotnet restore
   - ps: dotnet --verbose build
+  - ps: cd ..\RestMockCore.Test
+  - ps: dotnet restore
+  - ps: dotnet --verbose build
+  - ps: cd ..\..\
   #- ps: Pop-Location
 test: on 
     
