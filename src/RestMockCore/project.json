@@ -3,7 +3,6 @@
   "authors": [ "Behnam Yousefi" ],
   "packOptions": {
     "id": "rest-mock-core",
-    //"name": "rest-mock-core",
     "owners": [ "benyblack" ],
     "summary": "A simple http server for using in test projects which test .net core based projects.",
     "releaseNotes": "Bug fixes",
