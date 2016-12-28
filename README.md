@@ -1,4 +1,6 @@
 [![NuGet version](https://badge.fury.io/nu/rest-mock-core.svg)](https://badge.fury.io/nu/rest-mock-core)
+[![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true)](https://ci.appveyor.com/project/benyblack/rest-mock-core)
+
 # rest-mock-core
 A simple http server for using in test projects which test .net core based projects.
 It is tested with Visual Studio 2015 Update 3 and xUnit.
