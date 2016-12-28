@@ -9,6 +9,7 @@ build_script:
   - ps: dotnet --verbose build
   - ps: dotnet --verbose run a b
   - ps: Pop-Location
-
-
-test: off 
+  - ps: dotnet-test 
+  - ps: dotnet test .\src\RestMockCore.Test\project.json
+test: on 
+    
