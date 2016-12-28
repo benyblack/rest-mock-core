@@ -5,7 +5,8 @@ build_script:
   # Run dotnet new 
   - ps: mkdir "test\test-dotnet-new" -Force | Push-Location
   - ps: dotnet restore
-  - ps: dotnet --verbose build
+  - ps: Build.ps1
+#  - ps: dotnet --verbose build
   - ps: Pop-Location
 test: on 
     
