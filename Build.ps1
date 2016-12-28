@@ -46,5 +46,5 @@ $revision = "{0:D4}" -f [convert]::ToInt32($revision, 10)
 $nuget = ".\nuget.exe";
 exec { & dotnet test .\src\RestMockCore.Test -c Release }
 
-#exec { & $nuget pack .\src\RestMockCore\rest-mock-core.nuspec} 
-exec { & dotnet pack .\src\RestMockCore -c Release -o .\artifacts --version-suffix=$revision } 
+exec { & $nuget pack .\src\RestMockCore\rest-mock-core.nuspec  -OutputDirectory .\artifacts} 
+#exec { & dotnet pack .\src\RestMockCore -c Release -o .\artifacts --version-suffix=$revision } 
