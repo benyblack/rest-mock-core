@@ -9,8 +9,7 @@ build_script:
   - ps: cd ..\RestMockCore.Test
   - ps: dotnet restore
   - ps: dotnet --verbose build
-  - cmd: dnu restore
-  - cmd: dnx -p project.json test 
+  - ps: dotnet test
   - ps: cd ..\..\
   #- ps: Pop-Location
 test: off
