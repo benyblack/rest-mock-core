@@ -4,9 +4,9 @@ build_script:
   - ps: dotnet --info
   # Run dotnet new 
   - ps: mkdir "test\test-dotnet-new" -Force | Push-Location
+  - ps: cd .\src\RestMockCore
   - ps: dotnet restore
-  - ps: .\Build.ps1
-#  - ps: dotnet --verbose build
+  - ps: dotnet --verbose build
   - ps: Pop-Location
 test: on 
     
