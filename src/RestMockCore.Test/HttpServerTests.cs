@@ -28,6 +28,8 @@ namespace RestMockCore.Test
             mockServer.Run();
             await send_request(5001);
             HttpClient httpClient = new HttpClient();
+            var responseGet = await httpClient.GetAsync(string.Format("http://localhost:{0}/", 5001));
+            Assert.Equal("text/plain", responseGet.Content.Headers.GetValues("Content-Type").First());
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() =>
             {
                 httpClient.GetAsync("http://localhost:5000/").RunSynchronously();
@@ -93,6 +95,7 @@ namespace RestMockCore.Test
             Assert.Equal(200, (int)responseGetAction.StatusCode);
 
         }
+
 
     }
 }

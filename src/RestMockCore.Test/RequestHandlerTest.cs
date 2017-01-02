@@ -31,6 +31,23 @@ namespace RestMockCore.Test
             Assert.Equal("application/json", route.Response.Headers["Content-Type"]);
         }
 
+        [Fact]
+        public void SendTest_Action()
+        {
+            requestHandler.Send(context=> {
+                context.ToString();
+            });
+            Assert.NotNull(route.Response);
+            Assert.NotNull(route.Response.Handler);
+        }
+
+        [Fact]
+        public void Response_Getter_Test()
+        {
+            var response = requestHandler.Response;
+            Assert.NotNull(response);
+        }
+
         public void Dispose()
         {
 

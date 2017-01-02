@@ -15,6 +15,12 @@ namespace RestMockCore.Test
         }
 
         [Fact]
+        public void Handler_Getter_Test()
+        {
+            Assert.NotNull(requestBuilder.Handler);
+        }
+
+        [Fact]
         public void RequestTest()
         {
             IRequestHandler requestHandler = requestBuilder.Request("GET", "/test/123/");
