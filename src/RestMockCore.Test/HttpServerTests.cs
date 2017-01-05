@@ -11,23 +11,23 @@ namespace RestMockCore.Test
 {
     public class HttpServerTests
     {
-        HttpServer mockServer;
+        private HttpServer _mockServer;
 
         [Fact]
         public async Task Test_general_functionality()
         {
-            mockServer = new HttpServer();
-            mockServer.Run();
+            _mockServer = new HttpServer();
+            _mockServer.Run();
             await send_request(5000);
         }
 
         [Fact]
         public async Task Test_constructor()
         {
-            mockServer = new HttpServer(5001);
-            mockServer.Run();
+            _mockServer = new HttpServer(5001);
+            _mockServer.Run();
             await send_request(5001);
-            HttpClient httpClient = new HttpClient();
+            var httpClient = new HttpClient();
             var responseGet = await httpClient.GetAsync(string.Format("http://localhost:{0}/", 5001));
             Assert.Equal("text/plain", responseGet.Content.Headers.GetValues("Content-Type").First());
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() =>
@@ -41,31 +41,32 @@ namespace RestMockCore.Test
 
         private async Task send_request(int port)
         {
-            HttpClient httpClient = new HttpClient();
+            var httpClient = new HttpClient();
 
             var responseGetDefault = await httpClient.GetAsync(string.Format("http://localhost:{0}/", port));
             Assert.Equal("It Works!", await responseGetDefault.Content.ReadAsStringAsync());
             Assert.Equal(200, (int)responseGetDefault.StatusCode);
             //=====================================
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Content-Type", "application/json");
-            headers.Add("testHeader", "TestHeaderValue");
+            var headers = new Dictionary<string, string>
+            {
+                {"Content-Type", "application/json"},
+                {"testHeader", "TestHeaderValue"}
+            };
 
-            mockServer.Config.Get("/test/123").Send("It Really Works!");
-            mockServer.Config.Post("/havij/123").Send("It Not Works!", 503);
-            mockServer.Config.Put("/testput/456").Send("{'status':'isWorking'}", 200, headers);
-            mockServer.Config.Delete("/testdel/456").Send("Deleted", 200);
-            mockServer.Config.Get("/testAction/123").Send(context =>
+            _mockServer.Config.Get("/test/123").Send("It Really Works!");
+            _mockServer.Config.Post("/havij/123").Send("It Not Works!", 503);
+            _mockServer.Config.Put("/testput/456").Send("{'status':'isWorking'}", 200, headers);
+            _mockServer.Config.Delete("/testdel/456").Send("Deleted", 200);
+            _mockServer.Config.Get("/testAction/123").Send(context =>
             {
                 context.Response.StatusCode = 200;
                 string response = "Action Test";
-                byte[] buffer = System.Text.Encoding.UTF8.GetBytes(response);
-                buffer = System.Text.Encoding.UTF8.GetBytes(response);
+                var buffer = System.Text.Encoding.UTF8.GetBytes(response);
                 context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
             });
 
-            Assert.NotNull(mockServer.Config);
-            Assert.Equal(5, mockServer.Config.RouteTable.Count);
+            Assert.NotNull(_mockServer.Config);
+            Assert.Equal(5, _mockServer.Config.RouteTable.Count);
 
             var responseGet = await httpClient.GetAsync(string.Format("http://localhost:{0}/test/123", port));
             Assert.Equal("It Really Works!", await responseGet.Content.ReadAsStringAsync());
@@ -77,8 +78,8 @@ namespace RestMockCore.Test
             Assert.Equal(503, (int)responsePost.StatusCode);
             //================================================================
             HttpContent putData = new StringContent("{'data':'Test'}");
-            HttpRequestMessage putMessage = new HttpRequestMessage(HttpMethod.Put, string.Format("http://localhost:{0}/testput/456", port));
-            putMessage.Content = putData;
+            HttpRequestMessage putMessage = new HttpRequestMessage(HttpMethod.Put,
+                string.Format("http://localhost:{0}/testput/456", port)) {Content = putData};
             var responsePut = await httpClient.SendAsync(putMessage);
             Assert.Equal("{'status':'isWorking'}", await responsePut.Content.ReadAsStringAsync());
             Assert.Equal("application/json", responsePut.Content.Headers.GetValues("Content-Type").First());

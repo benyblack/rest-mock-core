@@ -30,27 +30,23 @@ namespace RestMockCore
             {
                 return false;
             }
-            if (Request.Url == string.Format("{0}{1}", httpRequest.Path, httpRequest.QueryString))
+            if (Request.Url != string.Format("{0}{1}", httpRequest.Path, httpRequest.QueryString)) return false;
+            if (Request.Headers == null || Request.Headers.Count <= 0) return true;
+            foreach (var header in Request.Headers)
             {
-                if (Request.Headers != null && Request.Headers.Count > 0)
+                if (httpRequest.Headers.Keys.Contains(header.Key))
                 {
-
-                    foreach (var header in Request.Headers)
+                    if (httpRequest.Headers[header.Key] != header.Value)
                     {
-                        if (!httpRequest.Headers.Keys.Contains(header.Key))
-                        {
-                            return false;
-                        }
-                        else if (httpRequest.Headers[header.Key] != header.Value)
-                        {
-                            return false;
-                        }
+                        return false;
                     }
-
                 }
-                return true;
+                else
+                {
+                    return false;
+                }
             }
-            return false;
+            return true;
         }
 
 

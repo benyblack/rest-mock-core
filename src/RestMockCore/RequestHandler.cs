@@ -8,25 +8,14 @@ namespace RestMockCore
 {
     public class RequestHandler : IRequestHandler
     {
-
-        RouteTableItem _route;
+        private readonly RouteTableItem _route;
         public RequestHandler(RouteTableItem route)
         {
             _route = route;
         }
 
         HttpResponse _response = null;
-        public HttpResponse Response
-        {
-            get
-            {
-                if (_response == null)
-                {
-                    _response = new HttpResponse();
-                }
-                return _response;
-            }
-        }
+        public HttpResponse Response => _response ?? (_response = new HttpResponse());
 
         public void Send(string body)
         {

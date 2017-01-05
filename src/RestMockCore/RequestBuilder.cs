@@ -11,31 +11,11 @@ namespace RestMockCore
         {
         }
 
-        IRequestHandler _handler = null;
-        public IRequestHandler Handler
-        {
-            get
-            {
-                if (_handler == null)
-                {
-                    _handler = new RequestHandler(null);
-                }
-                return _handler;
-            }
-        }
+        private IRequestHandler _handler = null;
+        public IRequestHandler Handler => _handler ?? (_handler = new RequestHandler(null));
 
-        List<RouteTableItem> _routeTable = null;
-        public List<RouteTableItem> RouteTable
-        {
-            get
-            {
-                if (_routeTable == null)
-                {
-                    _routeTable = new List<RouteTableItem>();
-                }
-                return _routeTable;
-            }
-        }
+        private List<RouteTableItem> _routeTable = null;
+        public List<RouteTableItem> RouteTable => _routeTable ?? (_routeTable = new List<RouteTableItem>());
 
         #region Methods
         public IRequestHandler Delete(string url)

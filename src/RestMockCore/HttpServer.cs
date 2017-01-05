@@ -11,8 +11,8 @@ namespace RestMockCore
 {
     public class HttpServer : IHttpServer
     {
-        IWebHost _host;
-        int _port = 5000;
+        private IWebHost _host;
+        private readonly int _port;
 
         public IRequestBuilder Config { get; set; }
 

@@ -8,31 +8,30 @@ namespace RestMockCore.Test
 {
     public class RequestBuilderTest
     {
-        RequestBuilder requestBuilder;
+        private readonly RequestBuilder _requestBuilder;
         public RequestBuilderTest()
         {
-            requestBuilder = new RequestBuilder();
+            _requestBuilder = new RequestBuilder();
         }
 
         [Fact]
         public void Handler_Getter_Test()
         {
-            Assert.NotNull(requestBuilder.Handler);
+            Assert.NotNull(_requestBuilder.Handler);
         }
 
         [Fact]
         public void RequestTest()
         {
-            IRequestHandler requestHandler = requestBuilder.Request("GET", "/test/123/");
+            var requestHandler = _requestBuilder.Request("GET", "/test/123/");
             Assert.NotNull(requestHandler);
         }
 
         [Fact]
         public void RequestTest_with_headers()
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Content-Type", "application/json");
-            IRequestHandler requestHandler = requestBuilder.Request("GET", "/test/123/",headers);
+            var headers = new Dictionary<string, string> {{"Content-Type", "application/json"}};
+            var requestHandler = _requestBuilder.Request("GET", "/test/123/",headers);
             Assert.NotNull(requestHandler);
         }
     }
