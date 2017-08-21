@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>A simple http server for using in test projects which test .net core based projects. It was tested with Visual Studio 2015 Update 3 and xUnit.</Description>
+    <AssemblyTitle>rest-mock-core</AssemblyTitle>
+    <VersionPrefix>0.2.2</VersionPrefix>
+    <Authors>Behnam Yousefi</Authors>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>RestMockCore</AssemblyName>
+    <PackageId>RestMockCore</PackageId>
+    <PackageTags>c#;.netcore;asp.net-core;unit-testing xunit</PackageTags>
+    <PackageReleaseNotes>Bug fixes</PackageReleaseNotes>
+    <PackageLicenseUrl>https://github.com/benyblack/rest-mock-core/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/benyblack/rest-mock-core</RepositoryUrl>
+    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="..\..\README.md">
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Https" Version="1.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="1.0.2" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
