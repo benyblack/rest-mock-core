@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace RestMockCore
 {
-    public interface IHttpServer
+    public interface IHttpServer : IDisposable
     {
         void Run();
         IRequestBuilder Config { get;  }
-
     }
 }
