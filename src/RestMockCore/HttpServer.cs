@@ -60,5 +60,9 @@ namespace RestMockCore {
             _host.Start();
         }
 
+        public void Dispose()
+        {
+            _host?.Dispose();
+        }
     }
 }

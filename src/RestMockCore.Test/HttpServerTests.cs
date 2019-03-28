@@ -38,6 +38,14 @@ namespace RestMockCore.Test
 
         }
 
+        [Fact]
+        public async Task Supports_disposable()
+        {
+            using (_mockServer = new HttpServer(5001))
+            {
+                _mockServer.Run();
+            }
+        }
 
         private async Task send_request(int port)
         {
