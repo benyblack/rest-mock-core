@@ -14,7 +14,15 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/benyblack/rest-mock-core</RepositoryUrl>
     <PackageProjectUrl>https://github.com/benyblack/rest-mock-core</PackageProjectUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <None Update="..\..\README.md">
