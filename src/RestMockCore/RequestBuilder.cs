@@ -13,11 +13,9 @@ namespace RestMockCore
 
         private IRequestHandler _handler = null;
         public IRequestHandler Handler => _handler ?? (_handler = new RequestHandler(null));
-
         private List<RouteTableItem> _routeTable = null;
         public List<RouteTableItem> RouteTable => _routeTable ?? (_routeTable = new List<RouteTableItem>());
 
-        #region Methods
         public IRequestHandler Delete(string url)
         {
             return Request("DELETE", url);
@@ -37,7 +35,6 @@ namespace RestMockCore
         {
             return Request("PUT", url);
         }
-        #endregion
 
         public IRequestHandler Request(string method, string url)
         {

@@ -48,8 +48,5 @@ namespace RestMockCore
             }
             return true;
         }
-
-
     }
-
 }

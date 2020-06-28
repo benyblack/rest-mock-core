@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace RestMockCore
 {
-
-
     public interface IRequestHandler
     {
         HttpResponse Response { get; }
