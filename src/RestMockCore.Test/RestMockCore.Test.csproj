@@ -14,10 +14,6 @@
     <PackageReference Include="Moq" Version="4.7.142" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
-    <PackageReference Include="Microsoft.CodeCoverage" Version="1.0.1" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\RestMockCore\RestMockCore.csproj" />
   </ItemGroup>
