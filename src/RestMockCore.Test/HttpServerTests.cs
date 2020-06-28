@@ -39,7 +39,7 @@ namespace RestMockCore.Test
         }
 
         [Fact]
-        public async Task Supports_disposable()
+        public void Supports_disposable()
         {
             using (_mockServer = new HttpServer(5001))
             {
