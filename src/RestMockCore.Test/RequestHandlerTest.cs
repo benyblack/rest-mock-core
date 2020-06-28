@@ -26,7 +26,7 @@ namespace RestMockCore.Test
             Assert.NotNull(_route.Response);
             Assert.Equal("test body", _route.Response.Body);
             Assert.Equal(503, _route.Response.StatusCode);
-            Assert.Equal(1, _route.Response.Headers.Count);
+            Assert.Single(_route.Response.Headers);
             Assert.Equal("application/json", _route.Response.Headers["Content-Type"]);
         }
 
