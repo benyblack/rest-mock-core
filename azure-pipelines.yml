@@ -37,6 +37,7 @@ steps:
   inputs:
     command: 'push'
     arguments: '-SkipDuplicate'
+    allowPackageConflicts: true
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: 'Nuget rest-mock-core'
