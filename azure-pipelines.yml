@@ -32,12 +32,14 @@ steps:
     packagesToPack: '**/RestMockCore.csproj'
     versioningScheme: 'off'
 
-- task: NuGetCommand@2
-  displayName: 'Publish to nuget.org'
+- task: NuGetAuthenticate@0
+  displayName: 'Authenticating Nuget'
+  inputs:
+    nuGetServiceConnections: 'Nuget rest-mock-core'
+
+- task: DotNetCoreCLI@2
   inputs:
     command: 'push'
-    arguments: '-SkipDuplicate'
-    allowPackageConflicts: true
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: 'Nuget rest-mock-core'
