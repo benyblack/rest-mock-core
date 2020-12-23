@@ -8,16 +8,35 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
+- task: UseDotNet@2
+  displayName: 'Install dotnet 3.1 SDK'
+  inputs:
+    version: '3.1.x'
+    packageType: sdk
+
 - task: DotNetCoreCLI@2
+  displayName: 'Build the solution'
   inputs:
     command: 'build'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Run the tests'
   inputs:
     command: 'test'
+
 - task: DotNetCoreCLI@2
+  displayName: 'Packing'
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/RestMockCore.csproj'
+    versioningScheme: 'off'
+
+- task: NuGetCommand@2
+  displayName: 'Publish to nuget.org'
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    arguments: '-SkipDuplicate'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: 'Nuget rest-mock-core'
