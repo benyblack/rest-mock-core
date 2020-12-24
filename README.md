@@ -1,5 +1,5 @@
 [![NuGet version](https://badge.fury.io/nu/rest-mock-core.svg)](https://badge.fury.io/nu/rest-mock-core)
-[![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true)](https://ci.appveyor.com/project/benyblack/rest-mock-core)
+[![Build Status](https://benyblack.visualstudio.com/rest-mock-core/_apis/build/status/benyblack.rest-mock-core?branchName=main)](https://benyblack.visualstudio.com/rest-mock-core/_build/latest?definitionId=11&branchName=main)
 
 # rest-mock-core
 A simple http server for using in test projects which test .net core based projects.
