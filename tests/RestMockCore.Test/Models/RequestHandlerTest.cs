@@ -2,7 +2,7 @@
 using RestMockCore.Models;
 using Xunit;
 
-namespace RestMockCore.Test
+namespace RestMockCore.Test.Models
 {
     public class RequestHandlerTest
     {
