@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using HttpResponse = RestMockCore.Models.HttpResponse;
 
-namespace RestMockCore
+namespace RestMockCore.Interfaces
 {
     public interface IRequestHandler
     {
@@ -13,8 +12,5 @@ namespace RestMockCore
         void Send(string body, int statusCode);
         void Send(string body, int statusCode, Dictionary<string, string> headers);
         void Send(Action<HttpContext> context);
-
     }
-
-
 }

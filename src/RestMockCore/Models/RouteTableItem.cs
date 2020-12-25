@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace RestMockCore
+namespace RestMockCore.Models
 {
     public class RouteTableItem
     {
@@ -25,8 +22,9 @@ namespace RestMockCore
         public HttpResponse Response { get; set; }
         public HttpRequest Request { get; set; }
 
-        public bool IsMatch(Microsoft.AspNetCore.Http.HttpRequest httpRequest) {
-            if(Request.Method!= httpRequest.Method)
+        public bool IsMatch(Microsoft.AspNetCore.Http.HttpRequest httpRequest)
+        {
+            if (Request.Method != httpRequest.Method)
             {
                 return false;
             }

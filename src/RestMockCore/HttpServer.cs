@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using RestMockCore.Interfaces;
+using RestMockCore.Models;
 
-namespace RestMockCore {
+namespace RestMockCore
+{
     public class HttpServer : IHttpServer {
         private IWebHost _host;
         private readonly int _port;

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RestMockCore
+namespace RestMockCore.Interfaces
 {
     public interface IHttpResponse
     {

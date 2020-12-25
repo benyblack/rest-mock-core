@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using RestMockCore.Interfaces;
 
-namespace RestMockCore
+namespace RestMockCore.Models
 {
     public class HttpResponse : IHttpResponse
     {

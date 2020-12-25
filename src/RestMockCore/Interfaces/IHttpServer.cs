@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RestMockCore
+namespace RestMockCore.Interfaces
 {
     public interface IHttpServer : IDisposable
     {
