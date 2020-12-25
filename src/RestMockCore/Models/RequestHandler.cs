@@ -7,12 +7,12 @@ namespace RestMockCore.Models
 {
     public class RequestHandler : IRequestHandler
     {
-        private readonly RouteTableItem _route;
+        public RouteTableItem RouteTable { get; }
         public HttpResponse Response { get; private set; }
 
         public RequestHandler(RouteTableItem route)
         {
-            _route = route;
+            RouteTable = route;
             Response = new HttpResponse();
         }
 
@@ -39,7 +39,7 @@ namespace RestMockCore.Models
         public void Send(string body, int statusCode, Dictionary<string, string> headers, Action<HttpContext> context)
         {
             Response = new HttpResponse() { Body = body, StatusCode = statusCode, Headers = headers, Handler = context };
-            _route.Response = Response;
+            RouteTable.Response = Response;
         }
     }
 }
