@@ -29,17 +29,14 @@ steps:
   displayName: 'Packing'
   inputs:
     command: 'pack'
+    versioningScheme: byEnvVar
+    versionEnvVar: PackageVersion
     packagesToPack: '**/RestMockCore.csproj'
-    versioningScheme: 'off'
 
-- task: NuGetAuthenticate@0
-  displayName: 'Authenticating Nuget'
-  inputs:
-    nuGetServiceConnections: 'Nuget rest-mock-core'
-
-- task: DotNetCoreCLI@2
+- task: NuGetCommand@2
+  displayName: 'Push to nuget.org'
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: 'Nuget rest-mock-core'

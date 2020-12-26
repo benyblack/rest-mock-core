@@ -1,27 +1,26 @@
 [![NuGet version](https://badge.fury.io/nu/rest-mock-core.svg)](https://badge.fury.io/nu/rest-mock-core)
-[![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true)](https://ci.appveyor.com/project/benyblack/rest-mock-core)
+[![Build Status](https://benyblack.visualstudio.com/rest-mock-core/_apis/build/status/benyblack.rest-mock-core?branchName=main)](https://benyblack.visualstudio.com/rest-mock-core/_build/latest?definitionId=11&branchName=main)
 
 # rest-mock-core
 A simple http server for using in test projects which test .net core based projects.
-It is tested with Visual Studio 2015 Update 3 and xUnit.
 
 ## Problem
-When I started to write test for a netcore app, I realized that many of libraries do not work in that platform.
-One of my problems was to find an appropriate *Http Server Mock* library. Therefor I started to write this project.
+When I started to write some tests for a dotnet core app, I realized that many libraries do not work on that platform.
+One of my problems was to find an appropriate *HTTP Server Mock* library. Therefore I started to write this project.
 
 ## Install
 ```console
-Install-Package rest-mock-core
+dotnet add package rest-mock-core
 ```
 ## Usage
-By default, the server will return "It Works!" by Ok status code (200).
+By default, the server will return "It Works!" with a OK status code (200).
 
 ```csharp
 HttpServer mockServer = new HttpServer();
 mockServer.Run();
 ```
 Then you can use any http client sending request to it.
-Default url is http://localhost:5000 which its port could be changed constructor:
+Default url is http://localhost:5000 which its port could be changed on the constructor:
 
 ```csharp
 HttpClient httpClient = new HttpClient(5001);
@@ -31,12 +30,12 @@ HttpClient httpClient = new HttpClient(5001);
 ## More
 There are some options to manage requests better:
 ```csharp
-mockServer.Config.Get("/test/123").Send("It Really Works!");
-mockServer.Config.Post("/test2/123").Send("It is not working!", 503);
-mockServer.Config.Get("/testAction/123").Send(context =>
+mockServer.Config.Get("/api/v1/product/123").Send("It Really Works!");
+mockServer.Config.Post("/api/v2/store/a123b").Send("Failed!", 503);
+mockServer.Config.Get("/messages/123").Send(context =>
             {
                 context.Response.StatusCode = 200;
-                string response = "Action Test";
+                string response = "<h1>Your new message<h1>";
                 byte[] buffer = System.Text.Encoding.UTF8.GetBytes(response);
                 buffer = System.Text.Encoding.UTF8.GetBytes(response);
                 context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
@@ -45,6 +44,3 @@ mockServer.Config.Get("/testAction/123").Send(context =>
 You can use server.Config either before or after server.Run()
 
 For more details please check Test project.
-More options will be added ASAP.
-
-
