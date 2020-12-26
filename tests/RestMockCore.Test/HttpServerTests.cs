@@ -28,7 +28,6 @@ namespace RestMockCore.Test
 
         }
 
-        //TODO: Server can return version and other info on request default address
         [Fact]
         public async void Server_With_No_RouteTable_Should_Return_Default_Response()
         {
@@ -47,9 +46,8 @@ namespace RestMockCore.Test
             Assert.Throws<InvalidOperationException>(() => _httpClient.GetAsync(_address).RunSynchronously());
         }
 
-        //TODO: Server should return 404, when can't find any match route
         [Fact]
-        public async void Request_With_No_Match_RouteTable_Should_Return_Default_Response()
+        public async void Request_With_No_Match_RouteTable_Should_Return_PageNotFound()
         {
             //Arrange
             _mockServer = new HttpServer(Port);
@@ -61,8 +59,26 @@ namespace RestMockCore.Test
             _mockServer.Dispose();
 
             //Assert
-            Assert.Equal("It Works!", await responseGet.Content.ReadAsStringAsync());
-            Assert.Equal(200, (int)responseGet.StatusCode);
+            Assert.Equal("Page not found!", await responseGet.Content.ReadAsStringAsync());
+            Assert.Equal(404, (int)responseGet.StatusCode);
+            Assert.Equal("text/plain", responseGet.Content.Headers.GetValues("Content-Type").First());
+            Assert.Throws<InvalidOperationException>(() => _httpClient.GetAsync(_address).RunSynchronously());
+        }
+
+        [Fact]
+        public async void Request_Should_Return_PageNotFound_When_No_Route_Has_Been_Added()
+        {
+            //Arrange
+            _mockServer = new HttpServer(Port);
+            _mockServer.Run();
+
+            //Act
+            var responseGet = await _httpClient.GetAsync($"{_address}/test/456");
+            _mockServer.Dispose();
+
+            //Assert
+            Assert.Equal("Page not found!", await responseGet.Content.ReadAsStringAsync());
+            Assert.Equal(404, (int)responseGet.StatusCode);
             Assert.Equal("text/plain", responseGet.Content.Headers.GetValues("Content-Type").First());
             Assert.Throws<InvalidOperationException>(() => _httpClient.GetAsync(_address).RunSynchronously());
         }
