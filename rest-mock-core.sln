@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{761A4EF3-2723-4E0F-A284-4AFAFDBF3361}"
 EndProject
@@ -14,7 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestMockCore", "src\RestMockCore\RestMockCore.csproj", "{743A38A5-56C1-4259-8921-169B0EC72DFA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestMockCore.Test", "src\RestMockCore.Test\RestMockCore.Test.csproj", "{327BF74B-7798-4BCE-A00B-EA4E0305DC86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestMockCore.Test", "tests\RestMockCore.Test\RestMockCore.Test.csproj", "{327BF74B-7798-4BCE-A00B-EA4E0305DC86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A1632ED0-496B-4D81-B123-1190EE8808BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,9 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{743A38A5-56C1-4259-8921-169B0EC72DFA} = {761A4EF3-2723-4E0F-A284-4AFAFDBF3361}
-		{327BF74B-7798-4BCE-A00B-EA4E0305DC86} = {761A4EF3-2723-4E0F-A284-4AFAFDBF3361}
+		{327BF74B-7798-4BCE-A00B-EA4E0305DC86} = {A1632ED0-496B-4D81-B123-1190EE8808BC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {545E58A4-EB2D-4EA6-800E-31B16572AA5E}
 	EndGlobalSection
 EndGlobal

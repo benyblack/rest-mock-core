@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RestMockCore\RestMockCore.csproj" />
+    <ProjectReference Include="..\..\src\RestMockCore\RestMockCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
