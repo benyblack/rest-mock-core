@@ -2,7 +2,6 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>rest-mock-core</id>
-    <version>0.3.0</version>
     <authors>Behnam Yousefi</authors>
     <owners>benyblack</owners>
     <license>MIT</license>
@@ -10,12 +9,11 @@
     <!--<iconUrl>http://github.com/contoso/UsefulStuff/nuget_icon.png</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <title>rest-mock-core</title>
-    <description>A simple http server for using in test projects which test .net core based projects. It was tested with Visual Studio 2015 Update 3 and xUnit.</description>
+    <description>A simple http server for using in test projects which test .net core based projects.</description>
     <summary>A simple http server for using in test projects which test .net core based projects.</summary>
     <releaseNotes>
-      Migrate to dotnet standard 2.0
-      Some clean ups
+      Migrated to netstandard 2.1
     </releaseNotes>
-    <tags>c# .netcore asp.net-core unit-testing xunit</tags>
+    <tags>c# .netcore asp.net-core unit-testing xunit mock</tags>
   </metadata>
 </package>
