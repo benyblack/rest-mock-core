@@ -12,8 +12,8 @@
     <description>A simple http server for using in test projects which test .net core based projects.</description>
     <summary>A simple http server for using in test projects which test .net core based projects.</summary>
     <releaseNotes>
-      Migrated to netstandard 2.1
+      Server logic changed to return "Page Not Found (404)" when no route matched the request
     </releaseNotes>
-    <tags>c# .netcore asp.net-core unit-testing xunit mock</tags>
+    <tags>c# .netcore asp.net-core unit-testing xunit mock clean-code clean-architect</tags>
   </metadata>
 </package>
