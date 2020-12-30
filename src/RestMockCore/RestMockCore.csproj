@@ -3,13 +3,12 @@
   <PropertyGroup>
     <Description>A simple http server for using in test projects which test .net core based projects. It was tested with Visual Studio 2015 Update 3 and xUnit.</Description>
     <AssemblyTitle>rest-mock-core</AssemblyTitle>
-    <VersionPrefix>0.4.0</VersionPrefix>
     <Authors>Behnam Yousefi</Authors>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>RestMockCore</AssemblyName>
     <PackageId>rest-mock-core</PackageId>
-    <PackageTags>c#;.netcore;asp.net-core;unit-testing xunit mock</PackageTags>
-    <PackageReleaseNotes>Migrated to netstandard 2.1</PackageReleaseNotes>
+    <PackageTags>c#;.netcore;asp.net-core;unit-testing;xunit;mock;clean-code;clean-architect</PackageTags>
+    <PackageReleaseNotes>Server logic changed to return "Page Not Found (404)" when no route matched the request</PackageReleaseNotes>
     <PackageLicenseUrl>https://github.com/benyblack/rest-mock-core/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/benyblack/rest-mock-core</RepositoryUrl>
@@ -17,6 +16,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Version>0.5.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,7 +1,9 @@
 ﻿using System.Linq;
+using System.Text;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using RestMockCore.Interfaces;
 using RestMockCore.Models;
 
@@ -28,31 +30,32 @@ namespace RestMockCore
                 {
                     app.Run(async context =>
                     {
-                        var response = "It Works!";
-                        var buffer = System.Text.Encoding.UTF8.GetBytes(response);
-                        if (Config.RouteTable.HasAny())
+                        if (context.Request.Path == @"/")
                         {
-                            var route = Config.RouteTable.LastOrDefault(x => x.IsMatch(context.Request));
-                            if (route != null)
-                            {
-                                if (route.Response.Handler != null)
-                                {
-                                    route.Response.Handler(context);
-                                }
-                                else
-                                {
-                                    response = route.Response.Body;
-                                    context.Response.StatusCode = route.Response.StatusCode;
-                                    context.Response.Headers.AddRange(route.Response.Headers);
-                                    buffer = System.Text.Encoding.UTF8.GetBytes(response);
-                                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
-                                }
-                                return;
-                            }
+                            context.Response.ContentType = "text/plain";
+                            await context.Response.WriteAsync("It Works!", Encoding.UTF8);
+                            return;
                         }
-                        context.Response.ContentLength = response.Length;
-                        context.Response.ContentType = "text/plain";
-                        await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+
+                        var route = Config.RouteTable?.LastOrDefault(x => x.IsMatch(context.Request));
+                        if (route == null)
+                        {
+                            context.Response.StatusCode = StatusCodes.Status404NotFound;
+                            context.Response.ContentType = "text/plain";
+                            await context.Response.WriteAsync("Page not found!", Encoding.UTF8);
+                            return;
+                        }
+
+                        if (route.Response.Handler != null)
+                        {
+                            route.Response.Handler(context);
+                            return;
+                        }
+
+                        var response = route.Response.Body;
+                        context.Response.StatusCode = route.Response.StatusCode;
+                        context.Response.Headers.AddRange(route.Response.Headers);
+                        await context.Response.WriteAsync(response, Encoding.UTF8).ConfigureAwait(false);
                     });
                 }).Build();
             _host.Start();
