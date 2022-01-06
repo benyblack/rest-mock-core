@@ -12,12 +12,14 @@ namespace RestMockCore
     public class HttpServer : IHttpServer
     {
         private IWebHost _host;
+        private readonly string _hostname;
         private readonly int _port;
 
         public IRequestBuilder Config { get; set; }
 
-        public HttpServer(int port = 5000)
+        public HttpServer(int port = 5000, string hostname = "localhost")
         {
+            _hostname = hostname;
             _port = port;
             Config = new RequestBuilder();
         }
@@ -25,7 +27,7 @@ namespace RestMockCore
         public void Run()
         {
             _host = WebHost.CreateDefaultBuilder()
-                .UseUrls($"http://localhost:{_port}")
+                .UseUrls($"http://{_hostname}:{_port}")
                 .Configure(app =>
                 {
                     app.Run(async context =>

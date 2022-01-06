@@ -3,6 +3,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.IO.Enumeration;
 using System.Linq;
 
 namespace RestMockCore.Test
@@ -12,8 +13,9 @@ namespace RestMockCore.Test
         private HttpServer _mockServer;
         private readonly Dictionary<string, string> _headers;
         private readonly HttpClient _httpClient;
-        private const int Port = 5000;
-        private readonly string _address = $"http://localhost:{Port}";
+        private const string Host = "localhost";
+        private const int Port = 56789;
+        private readonly string _address = $"http://{Host}:{Port}";
 
         public HttpServerTests()
         {
@@ -37,6 +39,25 @@ namespace RestMockCore.Test
 
             //Act
             var defaultResponse = await _httpClient.GetAsync(_address);
+            _mockServer.Dispose();
+
+            //Assert
+            Assert.Equal("It Works!", await defaultResponse.Content.ReadAsStringAsync());
+            Assert.Equal(200, (int)defaultResponse.StatusCode);
+            Assert.Equal("text/plain", defaultResponse.Content.Headers.GetValues("Content-Type").First());
+            Assert.Throws<InvalidOperationException>(() => _httpClient.GetAsync(_address).RunSynchronously());
+        }
+        
+        [Fact]
+        public async void Server_Should_Work_With_Configured_Hostname()
+        {
+            //Arrange
+            var hostName = System.Net.Dns.GetHostName();
+            _mockServer = new HttpServer(Port, hostName);
+            _mockServer.Run();
+
+            //Act
+            var defaultResponse = await _httpClient.GetAsync($"http://{hostName}:{Port}");
             _mockServer.Dispose();
 
             //Assert
