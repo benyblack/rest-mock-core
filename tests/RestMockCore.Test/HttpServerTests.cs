@@ -3,6 +3,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Enumeration;
 using System.Linq;
 
@@ -45,6 +46,24 @@ namespace RestMockCore.Test
             Assert.Equal("It Works!", await defaultResponse.Content.ReadAsStringAsync());
             Assert.Equal(200, (int)defaultResponse.StatusCode);
             Assert.Equal("text/plain", defaultResponse.Content.Headers.GetValues("Content-Type").First());
+            Assert.Throws<InvalidOperationException>(() => _httpClient.GetAsync(_address).RunSynchronously());
+        }
+        
+        [Fact]
+        public async void Server_With_Overridden_Root_Should_Return_Correct_Response()
+        {
+            //Arrange
+            _mockServer = new HttpServer(Port);
+            _mockServer.Config.Get("/").Send("Even this works!");
+            _mockServer.Run();
+
+            //Act
+            var defaultResponse = await _httpClient.GetAsync(_address);
+            _mockServer.Dispose();
+
+            //Assert
+            Assert.Equal("Even this works!", await defaultResponse.Content.ReadAsStringAsync());
+            Assert.Equal(200, (int)defaultResponse.StatusCode);
             Assert.Throws<InvalidOperationException>(() => _httpClient.GetAsync(_address).RunSynchronously());
         }
         

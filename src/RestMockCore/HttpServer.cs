@@ -32,20 +32,19 @@ namespace RestMockCore
                 {
                     app.Run(async context =>
                     {
-                        if (context.Request.Path == @"/")
-                        {
-                            context.Response.ContentType = "text/plain";
-                            await context.Response.WriteAsync("It Works!", Encoding.UTF8);
-                            return;
-                        }
-
                         var route = Config.RouteTable?.LastOrDefault(x => x.IsMatch(context.Request));
-                        if (route == null)
+                        
+                        switch (route)
                         {
-                            context.Response.StatusCode = StatusCodes.Status404NotFound;
-                            context.Response.ContentType = "text/plain";
-                            await context.Response.WriteAsync("Page not found!", Encoding.UTF8);
-                            return;
+                            case null when context.Request.Path == @"/":
+                                context.Response.ContentType = "text/plain";
+                                await context.Response.WriteAsync("It Works!", Encoding.UTF8);
+                                return;
+                            case null:
+                                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                                context.Response.ContentType = "text/plain";
+                                await context.Response.WriteAsync("Page not found!", Encoding.UTF8);
+                                return;
                         }
 
                         if (route.Response.Handler != null)
