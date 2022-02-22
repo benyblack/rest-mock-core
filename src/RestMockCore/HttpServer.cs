@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Text;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +25,8 @@ namespace RestMockCore
 
         public void Run()
         {
-            _host = WebHost.CreateDefaultBuilder()
+            _host = new WebHostBuilder()
+                .UseKestrel()
                 .UseUrls($"http://{_hostname}:{_port}")
                 .Configure(app =>
                 {

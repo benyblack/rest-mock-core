@@ -1,10 +1,7 @@
 using Xunit;
 using System;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Enumeration;
 using System.Linq;
 
 namespace RestMockCore.Test

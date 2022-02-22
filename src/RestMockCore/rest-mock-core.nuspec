@@ -9,11 +9,11 @@
     <!--<iconUrl>http://github.com/contoso/UsefulStuff/nuget_icon.png</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <title>rest-mock-core</title>
-    <description>A simple http server for using in test projects which test .net core based projects.</description>
-    <summary>A simple http server for using in test projects which test .net core based projects.</summary>
+    <description>A simple http server for using as a mock http server in test projects.</description>
+    <summary>A simple http server for using as a mock http server in test projects.</summary>
     <releaseNotes>
-      Server logic changed to return "Page Not Found (404)" when no route matched the request
+      Migrate to dotnet 6.0
     </releaseNotes>
-    <tags>c# .netcore asp.net-core unit-testing xunit mock clean-code clean-architect</tags>
+    <tags>c# dotnet asp.net-core unit-testing xunit mock</tags>
   </metadata>
 </package>
