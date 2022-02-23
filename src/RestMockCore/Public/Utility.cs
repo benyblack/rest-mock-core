@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-
-namespace RestMockCore
+﻿namespace RestMockCore;
+public static class Utility
 {
-    public static class Utility
+    public static bool HasAny<T>(this IEnumerable<T> data)
     {
-        public static bool HasAny<T>(this IEnumerable<T> data)
-        {
-            return data != null && data.Any();
-        }
+        return data != null && data.Any();
+    }
 
-        public static void AddRange(this IHeaderDictionary responseHeader, Dictionary<string,string> headers )
+    public static void AddRange(this IHeaderDictionary responseHeader, Dictionary<string, string> headers)
+    {
+        if (headers == null) return;
+        foreach (var item in headers)
         {
-            if (headers == null) return;
-            foreach (var item in headers)
-            {
-                responseHeader.Add(item.Key, item.Value);
-            }
+            responseHeader.Add(item.Key, item.Value);
         }
     }
 }

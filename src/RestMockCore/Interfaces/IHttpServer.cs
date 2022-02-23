@@ -1,10 +1,6 @@
-﻿using System;
-
-namespace RestMockCore.Interfaces
+﻿namespace RestMockCore.Interfaces;
+public interface IHttpServer : IDisposable
 {
-    public interface IHttpServer : IDisposable
-    {
-        void Run();
-        IRequestBuilder Config { get;  }
-    }
+    void Run();
+    IRequestBuilder Config { get; }
 }
