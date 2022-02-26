@@ -1,6 +1,8 @@
 ﻿using RestMockCore.Interfaces;
+using RestMockCore.Models;
+using HttpResponse = RestMockCore.Models.HttpResponse;
 
-namespace RestMockCore.Models;
+namespace RestMockCore;
 public class RequestHandler : IRequestHandler
 {
     public RouteTableItem RouteTable { get; }

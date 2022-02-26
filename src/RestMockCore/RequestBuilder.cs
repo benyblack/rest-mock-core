@@ -1,6 +1,7 @@
 ﻿using RestMockCore.Interfaces;
+using RestMockCore.Models;
 
-namespace RestMockCore.Models
+namespace RestMockCore
 {
     public class RequestBuilder : IRequestBuilder
     {
