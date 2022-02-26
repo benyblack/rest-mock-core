@@ -7,8 +7,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>RestMockCore</AssemblyName>
     <PackageId>rest-mock-core</PackageId>
-    <PackageTags>c#;.netcore;asp.net-core;unit-testing;xunit;mock;clean-code;clean-architect</PackageTags>
-    <PackageReleaseNotes>Server logic changed to return "Page Not Found (404)" when no route matched the request</PackageReleaseNotes>
+    <PackageTags>c#;dotnet;aspnetcore;unit-testing;xunit;mock;</PackageTags>
+    <PackageReleaseNotes>Migrate to dotnet 6.0</PackageReleaseNotes>
     <PackageLicenseUrl>https://github.com/benyblack/rest-mock-core/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/benyblack/rest-mock-core</RepositoryUrl>
