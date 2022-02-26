@@ -266,3 +266,6 @@ __pycache__/
 
 # vscode files
 .vscode
+
+# Test coverage files
+lcov.info
