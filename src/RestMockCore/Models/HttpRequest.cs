@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using RestMockCore.Interfaces;
+﻿using RestMockCore.Interfaces;
 
 namespace RestMockCore.Models
 {

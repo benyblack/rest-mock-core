@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace RestMockCore.Models
+﻿namespace RestMockCore.Models
 {
     public class RouteTableItem
     {
