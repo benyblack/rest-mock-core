@@ -60,7 +60,7 @@ Lastly, headers can be added to the request:
 ```csharp
 Dictionary<string, string> headers = new(){{"user-agent", "IE6"}};
 mockServer.Config.Request("PATCH", "/api/v2.3/products/3234", headers)
-                 .Send("Comme on buddy! Really IE6?", HttpStatusCode.MethodNotAllowed);
+                 .Send("C'mon man! Really IE6?", HttpStatusCode.MethodNotAllowed);
 ```
 
 You can use `server.Config` either before or after `server.Run()`
