@@ -43,7 +43,7 @@ public class HttpServer : IHttpServer
                     }
 
                     var responseText = route.Response.Body;
-                    context.Response.StatusCode = route.Response.StatusCode;
+                    context.Response.StatusCode = (int)route.Response.StatusCode;
                     context.Response.Headers.AddRange(route.Response.Headers);
                     await context.Response.WriteAsync(responseText, Encoding.UTF8).ConfigureAwait(false);
                 });

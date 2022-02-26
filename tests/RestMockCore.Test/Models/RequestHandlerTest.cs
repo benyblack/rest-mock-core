@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using RestMockCore.Models;
+using System.Net;
 using Xunit;
 
 namespace RestMockCore.Test.Models
@@ -36,7 +37,7 @@ namespace RestMockCore.Test.Models
             //Assert
             Assert.NotNull(_route.Response);
             Assert.Equal("test body", _route.Response.Body);
-            Assert.Equal(200, _route.Response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, _route.Response.StatusCode);
             Assert.Null(_route.Response.Headers);
         }
 
@@ -49,7 +50,7 @@ namespace RestMockCore.Test.Models
             //Assert
             Assert.NotNull(_route.Response);
             Assert.Equal("test body", _route.Response.Body);
-            Assert.Equal(503, _route.Response.StatusCode);
+            Assert.Equal(HttpStatusCode.ServiceUnavailable, _route.Response.StatusCode);
             Assert.Null(_route.Response.Headers);
         }
 
@@ -65,7 +66,7 @@ namespace RestMockCore.Test.Models
             //Assert
             Assert.NotNull(_route.Response);
             Assert.Equal("test body", _route.Response.Body);
-            Assert.Equal(503, _route.Response.StatusCode);
+            Assert.Equal(HttpStatusCode.ServiceUnavailable, _route.Response.StatusCode);
             Assert.Single(_route.Response.Headers);
             Assert.Equal("application/json", _route.Response.Headers["Content-Type"]);
         }
