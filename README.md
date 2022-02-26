@@ -6,14 +6,10 @@ A simple http server for using in test projects which test .net core based proje
 
 ## Problem
 When I started to write some tests for a dotnet core app, I realized that many libraries do not work on that platform.
-One of my problems was to find an appropriate `HTTP Server Mocking` library. So, I created this project.
+One of my problems was to find an appropriate **HTTP Server Mocking** library. So, I created this project.
 
 ## Install
-You can install `rest-mock-core` with [NuGet Package Manager Console](https://www.nuget.org/packages/rest-mock-core):
-```console
-Install-Package rest-mock-core 
-```
-Or via the .NET Core command-line interface:
+
 ```console
 dotnet add package rest-mock-core
 ```    
@@ -27,6 +23,7 @@ Then you can use any http client sending request to it.
 
 ```csharp
 HttpClient httpClient = new HttpClient(5001);
+var response = await httpClient.GetAsync("http://localhost:5001/");
 ```
 
 * If you call the root of server, it will return *"It Works!"* with a OK status code (200). Of course it can be overrided by adding a responose for the root url.
@@ -35,7 +32,7 @@ HttpClient httpClient = new HttpClient(5001);
 ```csharp
 mockServer.Config.Get("/api/product/").Send("It Really Works!");
 ```
-* If you call a address which are not configured, you will receive *"Page not found!"* with status code (404).
+* If you call a address which is not configured, you will receive *"Page not found!"* with status code (404).
 
 ## More
 There are some options to manage requests easier:
