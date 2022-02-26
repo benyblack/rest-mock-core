@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using RestMockCore.Models;
 using System.Net;
+using RestMockCore.Models;
 using Xunit;
 
 namespace RestMockCore.Test.Models

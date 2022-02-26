@@ -1,8 +1,8 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
-using System.Collections.Generic;
 using RestMockCore.Models;
 using Xunit;
 
@@ -53,7 +53,7 @@ namespace RestMockCore.Test.Models
         {
             //Act
             var route = new RouteTableItem("GET", "/test?q=123", _headers);
-           
+
             //Assert
             Assert.True(route.IsMatch(_httpRequestMock.Object));
         }

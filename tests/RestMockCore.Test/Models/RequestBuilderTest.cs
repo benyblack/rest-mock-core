@@ -28,7 +28,7 @@ namespace RestMockCore.Test.Models
             var requestHandler = _requestBuilder.Get("/test/123/");
             Assert.NotNull(requestHandler);
             Assert.NotNull(requestHandler.RouteTable);
-            Assert.Equal( "GET",requestHandler.RouteTable.Request.Method);
+            Assert.Equal("GET", requestHandler.RouteTable.Request.Method);
             Assert.Equal("/test/123/", requestHandler.RouteTable.Request.Url);
         }
 
@@ -79,8 +79,8 @@ namespace RestMockCore.Test.Models
         [Fact]
         public void Request_with_headers_Request_Should_Work_Correctly()
         {
-            var headers = new Dictionary<string, string> {{"Content-Type", "application/json"}};
-            var requestHandler = _requestBuilder.Request("GET", "/test/123/",headers);
+            var headers = new Dictionary<string, string> { { "Content-Type", "application/json" } };
+            var requestHandler = _requestBuilder.Request("GET", "/test/123/", headers);
             Assert.NotNull(requestHandler);
             Assert.NotNull(requestHandler.RouteTable);
             Assert.Equal("GET", requestHandler.RouteTable.Request.Method);

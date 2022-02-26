@@ -1,8 +1,8 @@
-using Xunit;
-using System;
-using System.Net.Http;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using Xunit;
 
 namespace RestMockCore.Test
 {
@@ -45,7 +45,7 @@ namespace RestMockCore.Test
             Assert.Equal("text/plain", defaultResponse.Content.Headers.GetValues("Content-Type").First());
             Assert.Throws<InvalidOperationException>(() => _httpClient.GetAsync(_address).RunSynchronously());
         }
-        
+
         [Fact]
         public async void Server_With_Overridden_Root_Should_Return_Correct_Response()
         {
@@ -63,7 +63,7 @@ namespace RestMockCore.Test
             Assert.Equal(200, (int)defaultResponse.StatusCode);
             Assert.Throws<InvalidOperationException>(() => _httpClient.GetAsync(_address).RunSynchronously());
         }
-        
+
         [Fact]
         public async void Server_Should_Work_With_Configured_Hostname()
         {

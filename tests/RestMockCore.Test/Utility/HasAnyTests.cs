@@ -20,14 +20,14 @@ namespace RestMockCore.Test.Utility
         {
             public IEnumerator<object[]> GetEnumerator()
             {
-                yield return new object[] {false, null};
-                yield return new object[] {false, new List<object>()};
-                yield return new object[] {false, new object[] { }};
-                yield return new object[] {false, Array.Empty<object>()};
-                yield return new object[] {true, new List<object>() {"test", 1, DateTime.Now}};
-                yield return new object[] {true, new List<object>() {"test"}};
-                yield return new object[] {true, new object[] {"test", 1, DateTime.Now}};
-                yield return new object[] {true, new object[] {"test"}};
+                yield return new object[] { false, null };
+                yield return new object[] { false, new List<object>() };
+                yield return new object[] { false, new object[] { } };
+                yield return new object[] { false, Array.Empty<object>() };
+                yield return new object[] { true, new List<object>() { "test", 1, DateTime.Now } };
+                yield return new object[] { true, new List<object>() { "test" } };
+                yield return new object[] { true, new object[] { "test", 1, DateTime.Now } };
+                yield return new object[] { true, new object[] { "test" } };
             }
 
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
