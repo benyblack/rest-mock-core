@@ -9,24 +9,10 @@ namespace RestMockCore.Test
     public class HttpServerTests
     {
         private HttpServer _mockServer;
-        private readonly Dictionary<string, string> _headers;
-        private readonly HttpClient _httpClient;
         private const string Host = "localhost";
         private const int Port = 56789;
         private readonly string _address = $"http://{Host}:{Port}";
-
-        public HttpServerTests()
-        {
-            //Arrange
-            _headers = new Dictionary<string, string>
-            {
-                {"Content-Type", "application/json"},
-                {"testHeader", "TestHeaderValue"}
-            };
-
-            _httpClient = new HttpClient();
-
-        }
+        private HttpClient _httpClient => new HttpClient();
 
         [Fact]
         public async void Server_With_No_RouteTable_Should_Return_Default_Response()
@@ -216,14 +202,48 @@ namespace RestMockCore.Test
         }
 
         [Fact]
-        public async void Put_Should_Work_Correctly()
+        public async void Post_HasHeaders_Should_Work_Correctly()
         {
             //Arrange
             _mockServer = new HttpServer(Port);
             _mockServer.Run();
 
             //Act
-            _mockServer.Config.Put("/testPut/456").Send("{'status':'isWorking'}", 200, _headers);
+            Dictionary<string, string> headers = new()
+            {
+                { "firstheader", "application/json" },
+                { "nextHeader", "TestHeaderValue" }
+            };
+            _mockServer.Config.Request("POST", "/havij/123", headers).Send("It Not Works!", 503);
+            HttpContent postData = new StringContent("{'data':'Test'}");
+
+            foreach (var header in headers)
+            {
+                postData.Headers.Add(header.Key, header.Value);
+            }
+
+            var responsePost = await _httpClient.PostAsync($"{_address}/havij/123", postData);
+            _mockServer.Dispose();
+
+            //Assert
+            Assert.Equal("It Not Works!", await responsePost.Content.ReadAsStringAsync());
+            Assert.Equal(503, (int)responsePost.StatusCode);
+        }
+
+        [Fact]
+        public async void Put_Should_Work_Correctly()
+        {
+            //Arrange
+            _mockServer = new HttpServer(Port);
+            _mockServer.Run();
+            var headers = new Dictionary<string, string>
+            {
+                {"Content-Type", "application/json"},
+                {"testHeader", "TestHeaderValue"}
+            };
+
+            //Act
+            _mockServer.Config.Put("/testPut/456").Send("{'status':'isWorking'}", 200, headers);
             HttpContent putData = new StringContent("{'data':'Test'}");
             var putMessage = new HttpRequestMessage(HttpMethod.Put, $"{_address}/testPut/456") { Content = putData };
             var responsePut = await _httpClient.SendAsync(putMessage);
