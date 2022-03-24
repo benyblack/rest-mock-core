@@ -46,5 +46,10 @@ namespace RestMockCore
             Handler = new RequestHandler(RouteTable.Last());
             return Handler;
         }
+
+        public void VerifyAll()
+        {
+            RouteTable.ForEach(x => x.Verify());
+        }
     }
 }

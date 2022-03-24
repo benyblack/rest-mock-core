@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Moq;
+using RestMockCore.Models;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
-using Moq;
-using RestMockCore.Models;
 using Xunit;
 
 namespace RestMockCore.Test.Models
@@ -33,6 +34,61 @@ namespace RestMockCore.Test.Models
             _httpRequestMock.Setup(request => request.Method).Returns("GET");
             _httpRequestMock.Setup(request => request.Path).Returns("/test");
             _httpRequestMock.Setup(request => request.QueryString).Returns(new QueryString("?q=123"));
+        }
+
+        [Fact]
+        public void Verify_ShouldThrowException_WhenRouteIsNotCalled()
+        {
+            //Arrange
+            var route = new RouteTableItem("GET", "/test", _headers);
+            route.IsVerifiable = true;
+            route.IsCalled = false;
+            //Act
+            var exception = Assert.Throws<Exception>(() => route.Verify());
+            //Assert
+            Assert.Equal("Route is not verifiable", exception.Message);
+        }
+
+        [Fact]
+        public void Verify_ShouldNotThrowException_WhenRouteIsNotVerifiable()
+        {
+            //Arrange
+            var route = new RouteTableItem("GET", "/test", _headers);
+            route.IsVerifiable = false;
+            route.IsCalled = false;
+            //Act
+            route.Verify();
+
+            //Assert
+
+        }
+
+        [Fact]
+        public void Verify_ShouldNotThrowException_WhenRouteIsVerifiableAndIsCalled()
+        {
+            //Arrange
+            var route = new RouteTableItem("GET", "/test", _headers);
+            route.IsVerifiable = true;
+            route.IsCalled = true;
+            //Act
+            route.Verify();
+
+            //Assert
+
+        }
+
+        [Fact]
+        public void VerifiableExtMethod_ShouldChangeIsVerifiableToTrue()
+        {
+            //Arrange
+            var routeTableItem = new RouteTableItem();
+            var RequestHandler = new RequestHandler(routeTableItem);
+
+            //Act
+            _ = RequestHandler.Send("something").Verifiable();
+
+            //Assert
+            Assert.True(routeTableItem.IsVerifiable);
         }
 
         [Fact]

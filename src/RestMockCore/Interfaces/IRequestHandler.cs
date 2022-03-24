@@ -6,10 +6,10 @@ public interface IRequestHandler
 {
     RouteTableItem RouteTable { get; }
     HttpResponse Response { get; }
-    void Send(string body);
-    void Send(string body, int statusCode);
-    void Send(string body, HttpStatusCode statusCode);
-    void Send(string body, int statusCode, Dictionary<string, string> headers);
-    void Send(string body, HttpStatusCode statusCode, Dictionary<string, string> headers);
-    void Send(Action<HttpContext> context);
+    RouteTableItem Send(string body);
+    RouteTableItem Send(string body, int statusCode);
+    RouteTableItem Send(string body, HttpStatusCode statusCode);
+    RouteTableItem Send(string body, int statusCode, Dictionary<string, string> headers);
+    RouteTableItem Send(string body, HttpStatusCode statusCode, Dictionary<string, string> headers);
+    RouteTableItem Send(Action<HttpContext> context);
 }

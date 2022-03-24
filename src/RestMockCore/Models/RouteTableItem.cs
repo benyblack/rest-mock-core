@@ -4,6 +4,15 @@
     {
         public HttpResponse Response { get; set; }
         public HttpRequest Request { get; set; }
+        public bool IsVerifiable { get; set; } = false;
+        public bool IsCalled { get; set; } = false;
+        public void Verify()
+        {
+            if (IsVerifiable && !IsCalled)
+            {
+                throw new Exception("Route is not verifiable");
+            }
+        }
 
         public RouteTableItem() : this("", "", null)
         {

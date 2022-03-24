@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using RestMockCore.Models;
+﻿using AutoFixture;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace RestMockCore.Test.Models
@@ -8,10 +8,12 @@ namespace RestMockCore.Test.Models
     public class RequestBuilderTest
     {
         private readonly RequestBuilder _requestBuilder;
+        private readonly Fixture _fixture;
         public RequestBuilderTest()
         {
             //Arrange
             _requestBuilder = new RequestBuilder();
+            _fixture = new Fixture();
         }
 
         [Fact]
@@ -87,6 +89,39 @@ namespace RestMockCore.Test.Models
             Assert.Equal("/test/123/", requestHandler.RouteTable.Request.Url);
             Assert.Single(requestHandler.RouteTable.Request.Headers);
             Assert.Equal("application/json", requestHandler.RouteTable.Request.Headers["Content-Type"]);
+        }
+
+        [Fact]
+        public void VerifyAll_ShouldThrowException_WhenAllRoutesAreCalledAndVerifiable()
+        {
+            // Arrange
+            var responseString = _fixture.Create<string>();
+            _requestBuilder.Get(_fixture.Create<string>()).Send(responseString).Verifiable();
+            _requestBuilder.Post(_fixture.Create<string>()).Send(responseString).Verifiable();
+            _requestBuilder.Put(_fixture.Create<string>()).Send(responseString).Verifiable();
+
+            // Act
+            var result = Assert.Throws<Exception>(() => _requestBuilder.VerifyAll());
+
+            // Assert
+            Assert.Equal("Route is not verifiable", result.Message);
+        }
+
+        [Fact]
+        public void VerifyAll_Should_Work_WhenAllRoutesAreCalledAndVerifiable()
+        {
+            // Arrange
+            var responseString = _fixture.Create<string>();
+            var routeItem1 = _requestBuilder.Get(_fixture.Create<string>()).Send(responseString).Verifiable();
+            var routeItem2 = _requestBuilder.Post(_fixture.Create<string>()).Send(responseString).Verifiable();
+            var routeItem3 = _requestBuilder.Put(_fixture.Create<string>()).Send(responseString).Verifiable();
+
+            routeItem1.IsCalled = true;
+            routeItem2.IsCalled = true;
+            routeItem3.IsCalled = true;
+
+            // Assert
+            _requestBuilder.VerifyAll();
         }
     }
 }

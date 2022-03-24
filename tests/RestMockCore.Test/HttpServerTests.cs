@@ -155,6 +155,23 @@ namespace RestMockCore.Test
         }
 
         [Fact]
+        public async void CallingAnEndpoint_ShouldMarkTheRouteIsCalled()
+        {
+            //Arrange
+            _mockServer = new HttpServer(Port);
+            _mockServer.Run();
+
+            //Act
+            var routeItem = _mockServer.Config.Get("/test/123").Send("It Really Works!");
+            var defaultResponse = await _httpClient.GetAsync($"{_address}/test/123");
+
+            _mockServer.Dispose();
+
+            //Assert
+            Assert.True(routeItem.IsCalled);
+        }
+
+        [Fact]
         public async void Get_Should_Work_Correctly()
         {
             //Arrange
