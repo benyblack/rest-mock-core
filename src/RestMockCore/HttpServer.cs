@@ -37,7 +37,7 @@ public class HttpServer : IHttpServer
 
                     // Now we have something to handle the request
                     // and we can verify the route is going to be handled
-                    route.IsCalled = true;
+                    route.CallCounter += 1;
 
                     if (route.Response.Handler != null)
                     {

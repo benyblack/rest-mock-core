@@ -45,9 +45,11 @@ namespace RestMockCore.Test.Models
             //Arrange
             var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
             route.IsVerifiable = true;
-            route.IsCalled = false;
+            route.CallCounter = 0;
+
             //Act
             var exception = Assert.Throws<Exception>(() => route.Verify());
+
             //Assert
             Assert.Equal("Route is not verifiable", exception.Message);
         }
@@ -58,12 +60,10 @@ namespace RestMockCore.Test.Models
             //Arrange
             var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
             route.IsVerifiable = false;
-            route.IsCalled = false;
-            //Act
+            route.CallCounter = 1;
+
+            //Act & Assert
             route.Verify();
-
-            //Assert
-
         }
 
         [Fact]
@@ -72,13 +72,81 @@ namespace RestMockCore.Test.Models
             //Arrange
             var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
             route.IsVerifiable = true;
-            route.IsCalled = true;
-            //Act
+            route.CallCounter = 1;
+
+            //Act & Assert
             route.Verify();
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(2)]
+        [InlineData(5)]
+        public void Verify_ShouldNotThrowException_WhenRouteIsVerifiableAndIsCalledExactNumberOfTimes(int times)
+        {
+            //Arrange
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
+            route.IsVerifiable = true;
+            route.CallCounter = times;
+
+            //Act & Assert
+            route.Verify(times);
+        }
+
+        [Fact]
+        public void Verify_ShouldNotThrowException_WhenRouteIsVerifiableAndFuncReturnsTrue()
+        {
+            //Arrange
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
+            route.IsVerifiable = true;
+            route.CallCounter = 4;
+
+            //Act & Assert
+            route.Verify(x => x > 3);
+        }
+
+        [Fact]
+        public void Verify_ShouldNotThrowException_WhenRouteIsVerifiableAndActionUsingMoqTimes()
+        {
+            //Arrange
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
+            route.IsVerifiable = true;
+            route.CallCounter = 4;
+
+            //Act & Assert
+            route.Verify(x => Times.AtLeast(3).Validate(x));
+        }
+
+        [Fact]
+        public void Verify_ShouldThrowException_WhenRouteIsVerifiableAndActionUsingMoqTimes()
+        {
+            //Arrange
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
+            route.IsVerifiable = true;
+            route.CallCounter = 4;
+
+            //Act
+            var exception = Assert.Throws<Exception>(() => route.Verify(x => Times.AtLeast(5).Validate(x)));
 
             //Assert
-
+            Assert.Equal("Route is not verifiable", exception.Message);
         }
+
+        [Fact]
+        public void Verify_ShouldThrowException_WhenRouteIsVerifiableAndActionReturnsFalse()
+        {
+            //Arrange
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
+            route.IsVerifiable = true;
+            route.CallCounter = 4;
+
+            //Act
+            var exception = Assert.Throws<Exception>(() => route.Verify(x => x < 3));
+
+            //Assert
+            Assert.Equal("Route is not verifiable", exception.Message);
+        }
+
 
         [Fact]
         public void VerifiableExtMethod_ShouldChangeIsVerifiableToTrue()

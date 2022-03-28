@@ -5,10 +5,27 @@
         public HttpResponse Response { get; set; }
         public HttpRequest Request { get; set; }
         public bool IsVerifiable { get; set; } = false;
-        public bool IsCalled { get; set; } = false;
+        public bool IsCalled => CallCounter > 0;
+        public int CallCounter { get; set; } = 0;
         public void Verify()
         {
             if (IsVerifiable && !IsCalled)
+            {
+                throw new Exception("Route is not verifiable");
+            }
+        }
+
+        public void Verify(int times)
+        {
+            if (IsVerifiable && CallCounter != times)
+            {
+                throw new Exception($"Route is not verifiable, called {CallCounter} times");
+            }
+        }
+
+        public void Verify(Func<int, bool> check)
+        {
+            if (IsVerifiable && !check(CallCounter))
             {
                 throw new Exception("Route is not verifiable");
             }

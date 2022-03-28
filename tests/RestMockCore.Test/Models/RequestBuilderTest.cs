@@ -159,9 +159,9 @@ public class RequestBuilderTest
         var routeItem3 = _requestBuilder.Put(_url).Send(responseString).Verifiable();
 
         // Act
-        routeItem1.IsCalled = true;
-        routeItem2.IsCalled = true;
-        routeItem3.IsCalled = true;
+        routeItem1.CallCounter = 1;
+        routeItem2.CallCounter = 1;
+        routeItem3.CallCounter = 1;
 
         // Assert
         _requestBuilder.VerifyAll();
