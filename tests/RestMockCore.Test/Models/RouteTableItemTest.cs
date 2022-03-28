@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Xunit;
+using AutoFixture;
 
 namespace RestMockCore.Test.Models
 {
@@ -17,9 +18,11 @@ namespace RestMockCore.Test.Models
         private const string GET = "GET";
         private const string POST = "POST";
         private readonly Mock<Microsoft.AspNetCore.Http.HttpRequest> _httpRequestMock;
+        private readonly Fixture _fixture;
 
         public RouteTableItemTest()
         {
+            _fixture = new Fixture();
             _headers = new Dictionary<string, string>
             {
                 {"Content-Type", "application/json"},
@@ -99,10 +102,10 @@ namespace RestMockCore.Test.Models
             //Arrange
             var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
             route.IsVerifiable = true;
-            route.CallCounter = 4;
+            route.CallCounter = _fixture.Create<int>();
 
             //Act & Assert
-            route.Verify(x => x > 3);
+            route.Verify(x => x > (route.CallCounter - 1));
         }
 
         [Fact]
@@ -111,22 +114,41 @@ namespace RestMockCore.Test.Models
             //Arrange
             var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
             route.IsVerifiable = true;
-            route.CallCounter = 4;
+            route.CallCounter = _fixture.Create<int>();
 
             //Act & Assert
-            route.Verify(x => Times.AtLeast(3).Validate(x));
+            route.Verify(x => Times.AtLeast(route.CallCounter - 1).Validate(x));
         }
 
         [Fact]
-        public void Verify_ShouldThrowException_WhenRouteIsVerifiableAndActionUsingMoqTimes()
+        public void Verify_ShouldThrowException_WhenRouteIsVerifiableCountNotEqual()
         {
             //Arrange
             var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
             route.IsVerifiable = true;
-            route.CallCounter = 4;
+            route.CallCounter = _fixture.Create<int>();
 
             //Act
-            var exception = Assert.Throws<Exception>(() => route.Verify(x => Times.AtLeast(5).Validate(x)));
+            var exception = Assert.Throws<Exception>(() =>
+                route.Verify(route.CallCounter + 1)
+            );
+
+            //Assert
+            Assert.StartsWith("Route is not verifiable", exception.Message);
+        }
+
+        [Fact]
+        public void Verify_ShouldThrowException_WhenRouteIsVerifiableAndActionUsingMoqTimesNotTrue()
+        {
+            //Arrange
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
+            route.IsVerifiable = true;
+            route.CallCounter = _fixture.Create<int>();
+
+            //Act
+            var exception = Assert.Throws<Exception>(() =>
+                route.Verify(x => Times.AtLeast(route.CallCounter + 1).Validate(x))
+            );
 
             //Assert
             Assert.Equal("Route is not verifiable", exception.Message);
@@ -138,10 +160,10 @@ namespace RestMockCore.Test.Models
             //Arrange
             var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
             route.IsVerifiable = true;
-            route.CallCounter = 4;
+            route.CallCounter = _fixture.Create<int>();
 
             //Act
-            var exception = Assert.Throws<Exception>(() => route.Verify(x => x < 3));
+            var exception = Assert.Throws<Exception>(() => route.Verify(x => x < (route.CallCounter - 1)));
 
             //Assert
             Assert.Equal("Route is not verifiable", exception.Message);
