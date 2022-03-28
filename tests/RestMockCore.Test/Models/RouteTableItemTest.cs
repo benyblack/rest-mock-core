@@ -12,11 +12,14 @@ namespace RestMockCore.Test.Models
     public class RouteTableItemTest
     {
         private readonly Dictionary<string, string> _headers;
+        private const string URL_WITH_QUERY = "/test/123/?test=123";
+        private const string URL_WITHOUT_QUERY = "/test/123/";
+        private const string GET = "GET";
+        private const string POST = "POST";
         private readonly Mock<Microsoft.AspNetCore.Http.HttpRequest> _httpRequestMock;
 
         public RouteTableItemTest()
         {
-            //Arrange
             _headers = new Dictionary<string, string>
             {
                 {"Content-Type", "application/json"},
@@ -32,15 +35,15 @@ namespace RestMockCore.Test.Models
             _httpRequestMock = new Mock<Microsoft.AspNetCore.Http.HttpRequest>();
             _httpRequestMock.Setup(request => request.Headers).Returns(headerDictionary);
             _httpRequestMock.Setup(request => request.Method).Returns("GET");
-            _httpRequestMock.Setup(request => request.Path).Returns("/test");
-            _httpRequestMock.Setup(request => request.QueryString).Returns(new QueryString("?q=123"));
+            _httpRequestMock.Setup(request => request.Path).Returns("/test/123/");
+            _httpRequestMock.Setup(request => request.QueryString).Returns(new QueryString("?test=123"));
         }
 
         [Fact]
         public void Verify_ShouldThrowException_WhenRouteIsNotCalled()
         {
             //Arrange
-            var route = new RouteTableItem("GET", "/test", _headers);
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
             route.IsVerifiable = true;
             route.IsCalled = false;
             //Act
@@ -53,7 +56,7 @@ namespace RestMockCore.Test.Models
         public void Verify_ShouldNotThrowException_WhenRouteIsNotVerifiable()
         {
             //Arrange
-            var route = new RouteTableItem("GET", "/test", _headers);
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
             route.IsVerifiable = false;
             route.IsCalled = false;
             //Act
@@ -67,7 +70,7 @@ namespace RestMockCore.Test.Models
         public void Verify_ShouldNotThrowException_WhenRouteIsVerifiableAndIsCalled()
         {
             //Arrange
-            var route = new RouteTableItem("GET", "/test", _headers);
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
             route.IsVerifiable = true;
             route.IsCalled = true;
             //Act
@@ -95,12 +98,12 @@ namespace RestMockCore.Test.Models
         public void Constructor_Should_Work_Correctly()
         {
             //Act
-            var route = new RouteTableItem("Get", "test/test", _headers);
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
 
             //Assert
             Assert.NotNull(route.Request);
-            Assert.Equal("Get", route.Request.Method);
-            Assert.Equal("test/test", route.Request.Url);
+            Assert.Equal(GET, route.Request.Method);
+            Assert.Equal(URL_WITH_QUERY, route.Request.Url);
             Assert.Equal(_headers, route.Request.Headers);
         }
 
@@ -108,7 +111,7 @@ namespace RestMockCore.Test.Models
         public void IsMatch_Should_Return_True_On_Valid_Data()
         {
             //Act
-            var route = new RouteTableItem("GET", "/test?q=123", _headers);
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
 
             //Assert
             Assert.True(route.IsMatch(_httpRequestMock.Object));
@@ -118,7 +121,7 @@ namespace RestMockCore.Test.Models
         public void IsMatch_Should_Return_False_On_Different_Method()
         {
             //Act
-            var route = new RouteTableItem("POST", "/test?q=123", _headers);
+            var route = new RouteTableItem(POST, URL_WITH_QUERY, _headers);
 
             //Assert
             Assert.False(route.IsMatch(_httpRequestMock.Object));
@@ -128,7 +131,7 @@ namespace RestMockCore.Test.Models
         public void IsMatch_Should_Return_False_On_Different_Url()
         {
             //Act
-            var route = new RouteTableItem("GET", "/test2?q=123", _headers);
+            var route = new RouteTableItem(GET, URL_WITHOUT_QUERY, _headers);
 
             //Assert
             Assert.False(route.IsMatch(_httpRequestMock.Object));
@@ -138,8 +141,8 @@ namespace RestMockCore.Test.Models
         public void IsMatch_Should_Return_True_On_ValidData_With_Null_Or_Empty_Header()
         {
             //Act
-            var route = new RouteTableItem("GET", "/test?q=123", null);
-            var route1 = new RouteTableItem("GET", "/test?q=123", new Dictionary<string, string>());
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, null);
+            var route1 = new RouteTableItem(GET, URL_WITH_QUERY, new Dictionary<string, string>());
 
             //Assert
             Assert.True(route.IsMatch(_httpRequestMock.Object));
@@ -151,7 +154,7 @@ namespace RestMockCore.Test.Models
         public void IsMatch_Should_Work_Correctly_With_Different_Header(bool expected, Dictionary<string, string> headers)
         {
             //Act
-            var route = new RouteTableItem("GET", "/test?q=123", headers);
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, headers);
 
             //Assert
             Assert.Equal(expected, route.IsMatch(_httpRequestMock.Object));
