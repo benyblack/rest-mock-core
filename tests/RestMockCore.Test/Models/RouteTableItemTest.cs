@@ -54,7 +54,7 @@ namespace RestMockCore.Test.Models
             var exception = Assert.Throws<Exception>(() => route.Verify());
 
             //Assert
-            Assert.Equal("Route is not verifiable", exception.Message);
+            Assert.Equal("Route can not be verified", exception.Message);
         }
 
         [Fact]
@@ -134,7 +134,7 @@ namespace RestMockCore.Test.Models
             );
 
             //Assert
-            Assert.StartsWith("Route is not verifiable", exception.Message);
+            Assert.StartsWith("Route can not be verified", exception.Message);
         }
 
         [Fact]
@@ -151,7 +151,7 @@ namespace RestMockCore.Test.Models
             );
 
             //Assert
-            Assert.Equal("Route is not verifiable", exception.Message);
+            Assert.Equal("Route can not be verified", exception.Message);
         }
 
         [Fact]
@@ -166,7 +166,7 @@ namespace RestMockCore.Test.Models
             var exception = Assert.Throws<Exception>(() => route.Verify(x => x < (route.CallCounter - 1)));
 
             //Assert
-            Assert.Equal("Route is not verifiable", exception.Message);
+            Assert.Equal("Route can not be verified", exception.Message);
         }
 
 

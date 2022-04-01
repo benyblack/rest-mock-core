@@ -7,11 +7,12 @@
         public bool IsVerifiable { get; set; } = false;
         public bool IsCalled => CallCounter > 0;
         public int CallCounter { get; set; } = 0;
+        private const string NOT_VERIFIED = "Route can not be verified";
         public void Verify()
         {
             if (IsVerifiable && !IsCalled)
             {
-                throw new Exception("Route is not verifiable");
+                throw new Exception(NOT_VERIFIED);
             }
         }
 
@@ -19,7 +20,7 @@
         {
             if (IsVerifiable && CallCounter != times)
             {
-                throw new Exception($"Route is not verifiable, called {CallCounter} times");
+                throw new Exception($"{NOT_VERIFIED}, called {CallCounter} times");
             }
         }
 
@@ -27,7 +28,7 @@
         {
             if (IsVerifiable && !check(CallCounter))
             {
-                throw new Exception("Route is not verifiable");
+                throw new Exception(NOT_VERIFIED);
             }
         }
 

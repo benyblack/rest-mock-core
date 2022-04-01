@@ -146,7 +146,7 @@ public class RequestBuilderTest
         var result = Assert.Throws<Exception>(() => _requestBuilder.VerifyAll());
 
         // Assert
-        Assert.Equal("Route is not verifiable", result.Message);
+        Assert.Equal("Route can not be verified", result.Message);
     }
 
     [Fact]
