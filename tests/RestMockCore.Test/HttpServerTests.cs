@@ -305,4 +305,26 @@ public class HttpServerTests
         Assert.Equal("Deleted", await responseDelete.Content.ReadAsStringAsync());
         Assert.Equal(200, (int)responseDelete.StatusCode);
     }
+
+    [Fact]
+    public async void VerifyAll_GivenVerifiableRoutes_ShouldWork()
+    {
+        //Arrange
+        _mockServer = new HttpServer(PORT);
+        _mockServer.Run();
+        _mockServer.Config.Get("/api/product/").Send("It Really Works!").Verifiable();
+        _mockServer.Config.Post("/api/login/").Send("Welcome.").Verifiable();
+
+        //Act
+        var getMessage = new HttpRequestMessage(HttpMethod.Get, $"{_address}/api/product/");
+        _ = await _httpClient.SendAsync(getMessage);
+        var postMessage = new HttpRequestMessage(HttpMethod.Post, $"{_address}/api/login/");
+        _ = await _httpClient.SendAsync(postMessage);
+
+        //Assert
+        _mockServer.Config.VerifyAll();
+
+        _mockServer.Dispose();
+    }
+
 }
