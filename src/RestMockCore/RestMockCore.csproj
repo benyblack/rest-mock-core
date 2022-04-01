@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk ">
 
   <PropertyGroup>
-    <Description>A simple http server for using in test projects which test .net core based projects. It was tested with Visual Studio 2015 Update 3 and xUnit.</Description>
+    <Description>A simple http server for using as a mock in test projects</Description>
     <AssemblyTitle>rest-mock-core</AssemblyTitle>
     <Authors>Behnam Yousefi</Authors>
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>RestMockCore</AssemblyName>
     <PackageId>rest-mock-core</PackageId>
     <PackageTags>c#;dotnet;aspnetcore;unit-testing;xunit;mock;</PackageTags>
-    <PackageReleaseNotes>Migrate to dotnet 6.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Add VerifyAll and Verify features</PackageReleaseNotes>
     <PackageLicenseUrl>https://github.com/benyblack/rest-mock-core/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/benyblack/rest-mock-core</RepositoryUrl>
@@ -16,13 +16,12 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>0.6.0</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>0.7.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="..\..\README.md">
-      <Pack>true</Pack>
-    </None>
+    <None Update="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>

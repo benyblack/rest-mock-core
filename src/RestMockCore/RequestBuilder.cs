@@ -42,9 +42,18 @@ namespace RestMockCore
 
         public IRequestHandler Request(string method, string url, Dictionary<string, string> headers)
         {
+            if (!url.StartsWith("/"))
+            {
+                url = $"/{url}";
+            }
             RouteTable.Add(new RouteTableItem(method, url, headers));
             Handler = new RequestHandler(RouteTable.Last());
             return Handler;
+        }
+
+        public void VerifyAll()
+        {
+            RouteTable.ForEach(x => x.Verify());
         }
     }
 }

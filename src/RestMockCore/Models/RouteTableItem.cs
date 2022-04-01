@@ -4,6 +4,33 @@
     {
         public HttpResponse Response { get; set; }
         public HttpRequest Request { get; set; }
+        public bool IsVerifiable { get; set; } = false;
+        public bool IsCalled => CallCounter > 0;
+        public int CallCounter { get; set; } = 0;
+        private const string NOT_VERIFIED = "Route can not be verified";
+        public void Verify()
+        {
+            if (IsVerifiable && !IsCalled)
+            {
+                throw new Exception(NOT_VERIFIED);
+            }
+        }
+
+        public void Verify(int times)
+        {
+            if (IsVerifiable && CallCounter != times)
+            {
+                throw new Exception($"{NOT_VERIFIED}, called {CallCounter} times");
+            }
+        }
+
+        public void Verify(Func<int, bool> check)
+        {
+            if (IsVerifiable && !check(CallCounter))
+            {
+                throw new Exception(NOT_VERIFIED);
+            }
+        }
 
         public RouteTableItem() : this("", "", null)
         {

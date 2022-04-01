@@ -14,44 +14,45 @@ public class RequestHandler : IRequestHandler
         Response = new HttpResponse();
     }
 
-    public void Send(string body)
+    public RouteTableItem Send(string body)
     {
-        Send(body, HttpStatusCode.OK, null);
+        return Send(body, HttpStatusCode.OK, null);
     }
 
-    public void Send(string body, int statusCode)
+    public RouteTableItem Send(string body, int statusCode)
     {
-        Send(body, (HttpStatusCode)statusCode, null);
+        return Send(body, (HttpStatusCode)statusCode);
     }
 
-    public void Send(string body, HttpStatusCode statusCode)
+    public RouteTableItem Send(string body, HttpStatusCode statusCode)
     {
-        Send(body, statusCode, null);
+        return Send(body, statusCode, null);
     }
 
-    public void Send(Action<HttpContext> context)
+    public RouteTableItem Send(Action<HttpContext> context)
     {
-        Send("", HttpStatusCode.OK, null, context);
+        return Send("", HttpStatusCode.OK, null, context);
     }
 
-    public void Send(string body, int statusCode, Dictionary<string, string> headers)
+    public RouteTableItem Send(string body, int statusCode, Dictionary<string, string> headers)
     {
-        Send(body, statusCode, headers, null);
+        return Send(body, statusCode, headers, null);
     }
 
-    public void Send(string body, HttpStatusCode statusCode, Dictionary<string, string> headers)
+    public RouteTableItem Send(string body, HttpStatusCode statusCode, Dictionary<string, string> headers)
     {
-        Send(body, statusCode, headers, null);
+        return Send(body, statusCode, headers, null);
     }
 
-    public void Send(string body, int statusCode, Dictionary<string, string> headers, Action<HttpContext> context)
+    public RouteTableItem Send(string body, int statusCode, Dictionary<string, string> headers, Action<HttpContext> context)
     {
-        Send(body, (HttpStatusCode)statusCode, headers, context);
+        return Send(body, (HttpStatusCode)statusCode, headers, context);
     }
 
-    public void Send(string body, HttpStatusCode statusCode, Dictionary<string, string> headers, Action<HttpContext> context)
+    public RouteTableItem Send(string body, HttpStatusCode statusCode, Dictionary<string, string> headers, Action<HttpContext> context)
     {
         Response = new HttpResponse() { Body = body, StatusCode = statusCode, Headers = headers, Handler = context };
         RouteTable.Response = Response;
+        return RouteTable;
     }
 }
