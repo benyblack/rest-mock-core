@@ -4,7 +4,13 @@
 # rest-mock-core
 A simple http server for using in test projects which test .net core based projects.
 
-## Problem
+- [Problem](#problem)
+- [Install](#install)
+- [Usage](#usage)
+- [Assert](#assert)
+- [More](#more)
+
+## Problem 
 When I started to write some tests for a dotnet core app, I realized that many libraries do not work on that platform.
 One of my problems was to find an appropriate **HTTP Server Mocking** library. So, I created this project.
 
@@ -34,8 +40,60 @@ mockServer.Config.Get("/api/product/").Send("It Really Works!");
 ```
 * If you call a address which is not configured, you will receive *"Page not found!"* with status code (404).
 
+## Assert
+
+You can mark each RouteItem as Verifiable and on the assert step all can be verified at once:
+
+```csharp
+//Arrange
+_mockServer = new HttpServer(PORT);
+_mockServer.Run();
+_mockServer.Config.Get("/api/product/").Send("It Really Works!").Verifiable();
+_mockServer.Config.Post("/api/login/").Send("Welcome.").Verifiable();
+
+//Act
+var getMessage = new HttpRequestMessage(HttpMethod.Get, $"{_address}/api/product/");
+_ = await _httpClient.SendAsync(getMessage);
+var postMessage = new HttpRequestMessage(HttpMethod.Post, $"{_address}/api/login/");
+_ = await _httpClient.SendAsync(postMessage);
+
+//Assert
+_mockServer.Config.VerifyAll();
+```
+Also it is possible to verify each route item in different ways:
+- Simply verify:
+```csharp
+//Arrange
+var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
+route.IsVerifiable = true;
+route.CallCounter = 1;
+
+//Act & Assert
+route.Verify();
+```
+- Verify by an action:
+```csharp
+//Arrange
+var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
+route.IsVerifiable = true;
+route.CallCounter = _fixture.Create<int>();
+
+//Act & Assert
+route.Verify(x => x > (route.CallCounter - 1));
+```
+- Verify using Moq Times:
+```csharp
+//Arrange
+var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
+route.IsVerifiable = true;
+route.CallCounter = _fixture.Create<int>();
+
+//Act & Assert
+route.Verify(x => Times.AtLeast(route.CallCounter - 1).Validate(x));
+```
+
 ## More
-There are some options to manage requests easier:
+There are some options to manage the requests easier:
 ```csharp
 mockServer.Config.Get("/api/v1/product/123").Send("It Really Works!");
 mockServer.Config.Post("/api/v2/store/a123b").Send("Failed", 503);
