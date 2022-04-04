@@ -269,3 +269,6 @@ __pycache__/
 
 # Test coverage files
 lcov.info
+
+# Test coverage report files
+coveragereport/
