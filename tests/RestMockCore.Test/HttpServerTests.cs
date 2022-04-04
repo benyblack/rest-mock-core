@@ -321,10 +321,34 @@ public class HttpServerTests
         var postMessage = new HttpRequestMessage(HttpMethod.Post, $"{_address}/api/login/");
         _ = await _httpClient.SendAsync(postMessage);
 
-        //Assert
+        //Assert        
         _mockServer.Config.VerifyAll();
 
         _mockServer.Dispose();
     }
 
+    [Fact]
+    public void DisposeServer_ShouldWork()
+    {
+        // Arrange
+        _mockServer = new HttpServer(PORT);
+        _mockServer.Run();
+
+        // Act
+        _mockServer.Dispose();
+
+        // Asssert
+        Assert.ThrowsAsync<Exception>(() => _httpClient.GetAsync(_address));
+    }
+
+    [Fact]
+    public void DisposeWhithoutRunnings_ShouldNotThrowException()
+    {
+        // Arrange
+        _mockServer = new HttpServer(PORT);
+
+        // Act & Assert
+        _mockServer.Dispose();
+
+    }
 }

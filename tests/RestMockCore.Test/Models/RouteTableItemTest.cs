@@ -97,6 +97,19 @@ namespace RestMockCore.Test.Models
         }
 
         [Fact]
+        public void VerifyTimes_ShouldNotThrowException_WhenRouteIsNotVerifiable()
+        {
+            // Arrange
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
+            route.IsVerifiable = false;
+            route.CallCounter = _fixture.Create<int>();
+
+            // Act
+            route.Verify(route.CallCounter + 1);
+
+        }
+
+        [Fact]
         public void Verify_ShouldNotThrowException_WhenRouteIsVerifiableAndFuncReturnsTrue()
         {
             //Arrange
@@ -105,6 +118,18 @@ namespace RestMockCore.Test.Models
             route.CallCounter = _fixture.Create<int>();
 
             //Act & Assert
+            route.Verify(x => x > (route.CallCounter - 1));
+        }
+
+        [Fact]
+        public void VerifyFunc_ShouldNotThrowException_WhenRouteIsNotVerifiable()
+        {
+            //Arrange
+            var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
+            route.IsVerifiable = false;
+            route.CallCounter = _fixture.Create<int>();
+
+            // Act & Assert\
             route.Verify(x => x > (route.CallCounter - 1));
         }
 
