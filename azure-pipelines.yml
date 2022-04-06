@@ -10,9 +10,9 @@ variables:
 steps:
 
 - task: UseDotNet@2
-  displayName: 'Install dotnet 3.1 SDK'
+  displayName: 'Install dotnet 6.0 SDK'
   inputs:
-    version: '3.1.x'
+    version: '6.0.x'
     packageType: sdk
 
 - task: DotNetCoreCLI@2
