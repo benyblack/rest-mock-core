@@ -1,4 +1,4 @@
-[![NuGet version](https://badge.fury.io/nu/rest-mock-core.svg)](https://badge.fury.io/nu/rest-mock-core)
+[![NuGet Badge](https://buildstats.info/nuget/rest-mock-core)](https://www.nuget.org/packages/rest-mock-core/)
 [![Build Status](https://benyblack.visualstudio.com/rest-mock-core/_apis/build/status/benyblack.rest-mock-core?branchName=main)](https://benyblack.visualstudio.com/rest-mock-core/_build/latest?definitionId=11&branchName=main)
 
 # rest-mock-core
@@ -108,7 +108,7 @@ mockServer.Config.Get("/messages/123").Send(context =>
                 context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
             });
 ```
-Also, it is possible to use other type of 'http method' by using 'Request':
+Also, it is possible to use other types of 'http method' by using 'Request':
 ```csharp
 mockServer.Config.Request("PATCH", "/api/v2.3/products/3234")
                  .Send("We don't use PATCH here.", HttpStatusCode.MethodNotAllowed);
