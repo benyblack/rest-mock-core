@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=./ /p:CoverletOutputFormat=lcov
+      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov
     - name: Coveralls GitHub Action
       # You may pin to the exact commit or the version.
       # uses: coverallsapp/github-action@9ba913c152ae4be1327bfb9085dc806cedb44057
@@ -31,6 +31,6 @@ jobs:
         # 
         github-token: ${{ secrets.GITHUB_TOKEN }}
         # Path to lcov file
-        path-to-lcov: ./lcov.info
+        path-to-lcov: tests/RestMockCore.Test/lcov.info
 
 
