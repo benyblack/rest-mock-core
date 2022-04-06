@@ -31,6 +31,6 @@ jobs:
         # 
         github-token: ${{ secrets.GITHUB_TOKEN }}
         # Path to lcov file
-        path-to-lcov: ./rest-mock-core/tests/RestMockCore.Test/lcov.info
+        path-to-lcov: ./tests/RestMockCore.Test/lcov.info
 
 
