@@ -29,7 +29,6 @@ steps:
   displayName: 'Packing'
   inputs:
     command: 'pack'
-    nobuild: true
     versioningScheme: byEnvVar
     versionEnvVar: PackageVersion
     packagesToPack: '**/RestMockCore.csproj'
