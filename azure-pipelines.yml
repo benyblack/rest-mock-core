@@ -33,10 +33,9 @@ steps:
     versionEnvVar: PackageVersion
     packagesToPack: '**/RestMockCore.csproj'
 
-- task: NuGetCommand@2
-  displayName: 'Push to nuget.org'
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish the package'
   inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    nuGetFeedType: 'external'
-    publishFeedCredentials: 'Nuget rest-mock-core'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
