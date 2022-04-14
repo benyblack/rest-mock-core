@@ -1,7 +1,7 @@
 [![NuGet Badge](https://buildstats.info/nuget/rest-mock-core)](https://www.nuget.org/packages/rest-mock-core/)
 [![Build Status](https://benyblack.visualstudio.com/rest-mock-core/_apis/build/status/benyblack.rest-mock-core?branchName=main)](https://benyblack.visualstudio.com/rest-mock-core/_build/latest?definitionId=11&branchName=main)
 [![Coverage Status](https://coveralls.io/repos/github/benyblack/rest-mock-core/badge.svg?branch=main)](https://coveralls.io/github/benyblack/rest-mock-core?branch=main)
-[![codecov](https://codecov.io/gh/benyblack/rest-mock-core/branch/master/graph/badge.svg?token=qvOpsPXtjh)](https://codecov.io/gh/benyblack/rest-mock-core)
+[![codecov](https://codecov.io/gh/benyblack/rest-mock-core/branch/main/graph/badge.svg?token=qvOpsPXtjh)](https://codecov.io/gh/benyblack/rest-mock-core)
 
 
 # rest-mock-core
