@@ -1,15 +1,18 @@
 [![NuGet Badge](https://buildstats.info/nuget/rest-mock-core)](https://www.nuget.org/packages/rest-mock-core/)
 [![Build Status](https://benyblack.visualstudio.com/rest-mock-core/_apis/build/status/benyblack.rest-mock-core?branchName=main)](https://benyblack.visualstudio.com/rest-mock-core/_build/latest?definitionId=11&branchName=main)
 [![Coverage Status](https://coveralls.io/repos/github/benyblack/rest-mock-core/badge.svg?branch=main)](https://coveralls.io/github/benyblack/rest-mock-core?branch=main)
+[![codecov](https://codecov.io/gh/benyblack/rest-mock-core/branch/master/graph/badge.svg?token=qvOpsPXtjh)](https://codecov.io/gh/benyblack/rest-mock-core)
+
 
 # rest-mock-core
 A simple http server for using in test projects which test .net core based projects.
 
-- [Problem](#problem)
-- [Install](#install)
-- [Usage](#usage)
-- [Assert](#assert)
-- [More](#more)
+- [rest-mock-core](#rest-mock-core)
+  - [Problem](#problem)
+  - [Install](#install)
+  - [Usage](#usage)
+  - [Assert](#assert)
+  - [More](#more)
 
 ## Problem 
 When I started to write some tests for a dotnet core app, I realized that many libraries do not work on that platform.
