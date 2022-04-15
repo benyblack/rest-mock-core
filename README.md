@@ -26,7 +26,7 @@ dotnet add package rest-mock-core
 ## Usage
 You can create and run a mock server as below. Default url is http://localhost:5000 The port can be changed in the constructor:
 ```csharp
-HttpServer mockServer = new HttpServer(5001);
+using HttpServer mockServer = new HttpServer(5001);
 mockServer.Run();
 ```
 Then you can use any http client sending request to it.
@@ -49,51 +49,71 @@ mockServer.Config.Get("/api/product/").Send("It Really Works!");
 You can mark each RouteItem as Verifiable and on the assert step all can be verified at once:
 
 ```csharp
-//Arrange
-_mockServer = new HttpServer(PORT);
-_mockServer.Run();
-_mockServer.Config.Get("/api/product/").Send("It Really Works!").Verifiable();
-_mockServer.Config.Post("/api/login/").Send("Welcome.").Verifiable();
+// Arrange
+using HttpServer mockServer = new HttpServer(5001);
+var users = new[]
+{
+    new User { id = 1, username = "user1" },
+    new User { id = 2, username = "user2" },
+    new User { id = 3, username = "user3" },
+};
+var _usersJson = JsonSerializer.Serialize(_users);
+mockServer.Config.Get("/api/users").Send(_usersJson).Verifiable();
+mockServer.Config.Get("/api/users2").Send(_usersJson).Verifiable();
+mockServer.Run();
 
-//Act
-var getMessage = new HttpRequestMessage(HttpMethod.Get, $"{_address}/api/product/");
-_ = await _httpClient.SendAsync(getMessage);
-var postMessage = new HttpRequestMessage(HttpMethod.Post, $"{_address}/api/login/");
-_ = await _httpClient.SendAsync(postMessage);
+var apiClient = new ApiClient("http://localhost:5001/api/users");
+var apiClient2 = new ApiClient("http://localhost:5001/api/users2");
 
-//Assert
-_mockServer.Config.VerifyAll();
+// Act
+_ = await apiClient.GetUsernames();
+_ = await apiClient2.GetUsernames();
+
+// Assert
+mockServer.Config.VerifyAll();
 ```
 Also it is possible to verify each route item in different ways:
 - Simply verify:
 ```csharp
 //Arrange
-var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
-route.IsVerifiable = true;
-route.CallCounter = 1;
+...
+var routeItem = mockServer.Config.Get("/api/users")
+                                 .Send(_usersJson)
+                                 .Verifiable();
+mockServer.Run();
 
-//Act & Assert
-route.Verify();
+var apiClient = new ApiClient("http://localhost:5001/api/users");
+
+// Act
+_ = await apiClient.GetUsernames();
+
+// Assert
+routeItem.Verify();
 ```
 - Verify by an action:
 ```csharp
 //Arrange
-var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
-route.IsVerifiable = true;
-route.CallCounter = _fixture.Create<int>();
+...
 
-//Act & Assert
-route.Verify(x => x > (route.CallCounter - 1));
+// Act
+_ = await apiClient.GetUsernames();
+_ = await apiClient.GetUsernames();
+_ = await apiClient.GetUsernames();
+
+// Assert
+routeItem.Verify(x => x == 3);
 ```
 - Verify using Moq Times:
 ```csharp
 //Arrange
-var route = new RouteTableItem(GET, URL_WITH_QUERY, _headers);
-route.IsVerifiable = true;
-route.CallCounter = _fixture.Create<int>();
+...
+// Act
+_ = await apiClient.GetUsernames();
+_ = await apiClient.GetUsernames();
+_ = await apiClient.GetUsernames();
 
-//Act & Assert
-route.Verify(x => Times.AtLeast(route.CallCounter - 1).Validate(x));
+// Assert
+routeItem.Verify(x => Times.AtLeast(2).Validate(x));
 ```
 
 ## More
@@ -125,6 +145,7 @@ mockServer.Config.Request("PATCH", "/api/v2.3/products/3234", headers)
                  .Send("C'mon man! Really IE6?", HttpStatusCode.MethodNotAllowed);
 ```
 
-You can use `server.Config` either before or after `server.Run()`
+- You can use `server.Config` either before or after `server.Run()`
+- Don't forget to use `using` when instantiate `HttpServer`, otherwise server may not be disposed.
 
 For more details please check Test project.
