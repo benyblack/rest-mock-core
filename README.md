@@ -149,3 +149,10 @@ mockServer.Config.Request("PATCH", "/api/v2.3/products/3234", headers)
 - Don't forget to use `using` when instantiate `HttpServer`, otherwise server may not be disposed.
 
 For more details please check Test project.
+
+### Acknowledgements
+[JetBrains](https://www.jetbrains.com/?from=rest-mock-core) kindly provides this project with a free open-source licence for their Resharper and Rider.
+- **Resharper** makes Visual Studio a much better IDE
+- **Rider** is fast & powerful cross platform .NET IDE
+
+![image](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/JetBrains_Logo_2016.svg/121px-JetBrains_Logo_2016.svg.png)
