@@ -6,13 +6,13 @@
     <owners>benyblack</owners>
     <license>MIT</license>
     <projectUrl>https://github.com/benyblack/rest-mock-core</projectUrl>
-    <!--<iconUrl>http://github.com/contoso/UsefulStuff/nuget_icon.png</iconUrl>-->
+    <!--<iconUrl>http://g ithub.com/contoso/UsefulStuff/nuget_icon.png</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <title>rest-mock-core</title>
     <description>A simple http server for using as a mock http server in test projects.</description>
     <summary>A simple http server for using as a mock http server in test projects.</summary>
     <releaseNotes>
-      Migrate to dotnet 6.0
+      Migrate to dotnet 8.0
     </releaseNotes>
     <tags>c# dotnet asp.net-core unit-testing xunit mock</tags>
   </metadata>

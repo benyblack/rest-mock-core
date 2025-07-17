@@ -4,7 +4,7 @@
     <Description>A simple http server for using as a mock in test projects</Description>
     <AssemblyTitle>rest-mock-core</AssemblyTitle>
     <Authors>Behnam Yousefi</Authors>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>RestMockCore</AssemblyName>
     <PackageId>rest-mock-core</PackageId>
     <PackageTags>c#;dotnet;aspnetcore;unit-testing;xunit;mock;</PackageTags>
