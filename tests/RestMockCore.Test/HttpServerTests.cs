@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace RestMockCore.Test;
@@ -328,7 +329,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public void DisposeServer_ShouldWork()
+    public async Task DisposeServer_ShouldWork()
     {
         // Arrange
         _mockServer = new HttpServer(PORT);
@@ -338,7 +339,7 @@ public class HttpServerTests
         _mockServer.Dispose();
 
         // Asssert
-        Assert.ThrowsAsync<Exception>(() => _httpClient.GetAsync(_address));
+        await Assert.ThrowsAsync<HttpRequestException>(() => _httpClient.GetAsync(_address));
     }
 
     [Fact]
