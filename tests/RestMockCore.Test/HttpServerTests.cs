@@ -29,7 +29,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void Server_With_No_RouteTable_Should_Return_Default_Response()
+    public async Task Server_With_No_RouteTable_Should_Return_Default_Response()
     {
         //Arrange
         _mockServer = new HttpServer(PORT);
@@ -47,7 +47,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void Server_With_Overridden_Root_Should_Return_Correct_Response()
+    public async Task Server_With_Overridden_Root_Should_Return_Correct_Response()
     {
         //Arrange
         _mockServer = new HttpServer(PORT);
@@ -66,7 +66,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void Server_Should_Work_With_Configured_Hostname()
+    public async Task Server_Should_Work_With_Configured_Hostname()
     {
         //Arrange
         var hostName = System.Net.Dns.GetHostName();
@@ -85,7 +85,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void Request_With_No_Match_RouteTable_Should_Return_PageNotFound()
+    public async Task Request_With_No_Match_RouteTable_Should_Return_PageNotFound()
     {
         //Arrange
         _mockServer = new HttpServer(PORT);
@@ -104,7 +104,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void Request_Should_Return_PageNotFound_When_No_Route_Has_Been_Added()
+    public async Task Request_Should_Return_PageNotFound_When_No_Route_Has_Been_Added()
     {
         //Arrange
         _mockServer = new HttpServer(PORT);
@@ -122,7 +122,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void MockServer_Should_SupPORTs_IDisposable()
+    public async Task MockServer_Should_SupPORTs_IDisposable()
     {
         //Arrange
         using (_mockServer = new HttpServer(PORT))
@@ -170,7 +170,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void CallingAnEndpoint_ShouldMarkTheRouteIsCalled()
+    public async Task CallingAnEndpoint_ShouldMarkTheRouteIsCalled()
     {
         //Arrange
         _mockServer = new HttpServer(PORT);
@@ -188,7 +188,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void Get_Should_Work_Correctly()
+    public async Task Get_Should_Work_Correctly()
     {
         //Arrange
         _mockServer = new HttpServer(PORT);
@@ -217,7 +217,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void Post_Should_Work_Correctly()
+    public async Task Post_Should_Work_Correctly()
     {
         //Arrange
         _mockServer = new HttpServer(PORT);
@@ -235,7 +235,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void Post_HasHeaders_Should_Work_Correctly()
+    public async Task Post_HasHeaders_Should_Work_Correctly()
     {
         //Arrange
         _mockServer = new HttpServer(PORT);
@@ -264,7 +264,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void Put_Should_Work_Correctly()
+    public async Task Put_Should_Work_Correctly()
     {
         //Arrange
         _mockServer = new HttpServer(PORT);
@@ -290,7 +290,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void Delete_Should_Work_Correctly()
+    public async Task Delete_Should_Work_Correctly()
     {
         //Arrange
         _mockServer = new HttpServer(PORT);
@@ -308,7 +308,7 @@ public class HttpServerTests
     }
 
     [Fact]
-    public async void VerifyAll_GivenVerifiableRoutes_ShouldWork()
+    public async Task VerifyAll_GivenVerifiableRoutes_ShouldWork()
     {
         //Arrange
         _mockServer = new HttpServer(PORT);
