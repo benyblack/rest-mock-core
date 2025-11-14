@@ -6,7 +6,8 @@
         public HttpRequest Request { get; set; }
         public bool IsVerifiable { get; set; } = false;
         public bool IsCalled => CallCounter > 0;
-        public int CallCounter { get; set; } = 0;
+        private int _callCounter = 0;
+        public int CallCounter { get => _callCounter; set => _callCounter = value; }
         private const string NOT_VERIFIED = "Route can not be verified";
         public void Verify()
         {
@@ -45,6 +46,8 @@
                 Headers = headers
             };
         }
+
+        public void IncrementCallCounter() => System.Threading.Interlocked.Increment(ref _callCounter);
 
         public bool IsMatch(Microsoft.AspNetCore.Http.HttpRequest httpRequest)
         {
