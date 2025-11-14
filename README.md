@@ -1,4 +1,4 @@
-[![NuGet Badge](https://buildstats.info/nuget/rest-mock-core)](https://www.nuget.org/packages/rest-mock-core/)
+[![NuGet Badge](https://img.shields.io/nuget/v/rest-mock-core)](https://www.nuget.org/packages/rest-mock-core/)
 [![Build Status](https://benyblack.visualstudio.com/rest-mock-core/_apis/build/status/benyblack.rest-mock-core?branchName=main)](https://benyblack.visualstudio.com/rest-mock-core/_build/latest?definitionId=11&branchName=main)
 [![Coverage Status](https://coveralls.io/repos/github/benyblack/rest-mock-core/badge.svg?branch=main)](https://coveralls.io/github/benyblack/rest-mock-core?branch=main)
 [![codecov](https://codecov.io/gh/benyblack/rest-mock-core/branch/main/graph/badge.svg?token=qvOpsPXtjh)](https://codecov.io/gh/benyblack/rest-mock-core)
@@ -13,7 +13,7 @@ A simple http server for using in test projects which test .net core based proje
   - [Usage](#usage)
   - [Assert](#assert)
   - [More](#more)
-
+ 
 ## Problem 
 When I started to write some tests for a dotnet core app, I realized that many libraries do not work on that platform.
 One of my problems was to find an appropriate **HTTP Server Mocking** library. So, I created this project.
@@ -22,7 +22,7 @@ One of my problems was to find an appropriate **HTTP Server Mocking** library. S
 
 ```console
 dotnet add package rest-mock-core
-```    
+```
 ## Usage
 You can create and run a mock server as below. Default url is http://localhost:5000 The port can be changed in the constructor:
 ```csharp
@@ -116,6 +116,7 @@ _ = await apiClient.GetUsernames();
 routeItem.Verify(x => Times.AtLeast(2).Validate(x));
 ```
 
+
 ## More
 There are some options to manage the requests easier:
 ```csharp
@@ -150,9 +151,5 @@ mockServer.Config.Request("PATCH", "/api/v2.3/products/3234", headers)
 
 For more details please check Test project.
 
-### Acknowledgements
-[JetBrains](https://www.jetbrains.com/?from=rest-mock-core) kindly provides this project with a free open-source licence for their Resharper and Rider.
-- **Resharper** makes Visual Studio a much better IDE
-- **Rider** is fast & powerful cross platform .NET IDE
 
 ![image](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/JetBrains_Logo_2016.svg/121px-JetBrains_Logo_2016.svg.png)
