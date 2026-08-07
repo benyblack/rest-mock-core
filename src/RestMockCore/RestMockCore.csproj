@@ -4,12 +4,11 @@
     <Description>A simple http server for using as a mock in test projects</Description>
     <AssemblyTitle>rest-mock-core</AssemblyTitle>
     <Authors>Behnam Yousefi</Authors>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <AssemblyName>RestMockCore</AssemblyName>
     <PackageId>rest-mock-core</PackageId>
     <PackageTags>c#;dotnet;aspnetcore;unit-testing;xunit;mock;</PackageTags>
-    <PackageReleaseNotes>Add VerifyAll and Verify features</PackageReleaseNotes>
-    <PackageLicenseUrl>https://github.com/benyblack/rest-mock-core/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageReleaseNotes>Multi-target net8.0 + net10.0; add VerificationException; bug fixes</PackageReleaseNotes>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/benyblack/rest-mock-core</RepositoryUrl>
     <PackageProjectUrl>https://github.com/benyblack/rest-mock-core</PackageProjectUrl>
@@ -17,7 +16,9 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>0.8.0</Version>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <Version>0.9.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

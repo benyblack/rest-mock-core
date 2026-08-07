@@ -2,18 +2,22 @@
 {
     public class RouteTableItem
     {
-        public HttpResponse Response { get; set; }
-        public HttpRequest Request { get; set; }
+        public HttpResponse? Response { get; set; }
+        public HttpRequest Request { get; set; } = new();
         public bool IsVerifiable { get; set; } = false;
-        public bool IsCalled => CallCounter > 0;
+        public bool IsCalled => _callCounter > 0;
         private int _callCounter = 0;
-        public int CallCounter { get => _callCounter; set => _callCounter = value; }
+        public int CallCounter
+        {
+            get => _callCounter;
+            set => _callCounter = value;
+        }
         private const string NOT_VERIFIED = "Route can not be verified";
         public void Verify()
         {
             if (IsVerifiable && !IsCalled)
             {
-                throw new Exception(NOT_VERIFIED);
+                throw new VerificationException(NOT_VERIFIED);
             }
         }
 
@@ -21,7 +25,7 @@
         {
             if (IsVerifiable && CallCounter != times)
             {
-                throw new Exception($"{NOT_VERIFIED}, called {CallCounter} times");
+                throw new VerificationException($"{NOT_VERIFIED}, called {CallCounter} times");
             }
         }
 
@@ -29,17 +33,17 @@
         {
             if (IsVerifiable && !check(CallCounter))
             {
-                throw new Exception(NOT_VERIFIED);
+                throw new VerificationException(NOT_VERIFIED);
             }
         }
 
-        public RouteTableItem() : this("", "", null)
+        public RouteTableItem() : this(string.Empty, string.Empty, null)
         {
         }
 
-        public RouteTableItem(string method, string url, Dictionary<string, string> headers)
+        public RouteTableItem(string method, string url, Dictionary<string, string>? headers)
         {
-            Request = new HttpRequest()
+            Request = new HttpRequest
             {
                 Method = method,
                 Url = url,
@@ -54,7 +58,7 @@
             if (Request.Method != httpRequest.Method) return false;
             if (Request.Url != $"{httpRequest.Path}{httpRequest.QueryString}") return false;
             if (!Request.Headers.HasAny()) return true;
-            foreach (var header in Request.Headers)
+            foreach (var header in Request.Headers!)
             {
                 if (!httpRequest.Headers.Keys.Contains(header.Key)) return false;
                 if (httpRequest.Headers[header.Key] != header.Value) return false;

@@ -1,7 +1,7 @@
-﻿namespace RestMockCore.Interfaces;
+namespace RestMockCore.Interfaces;
 public interface IHttpRequest
 {
-    Dictionary<string, string> Headers { get; set; }
+    Dictionary<string, string>? Headers { get; set; }
     string Method { get; set; }
     string Url { get; set; }
 }
