@@ -2,16 +2,15 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using RestMockCore.Interfaces;
-using System.Threading.Tasks;
 
 namespace RestMockCore;
 public class HttpServer : IHttpServer
 {
-    private IHost _host;
+    private IHost? _host;
     private readonly string _hostname;
     private readonly int _port;
 
-    public IRequestBuilder Config { get; set; }
+    public IRequestBuilder Config { get; set; } = null!;
 
     public HttpServer(int port = 5000, string hostname = "localhost")
     {
@@ -31,20 +30,7 @@ public class HttpServer : IHttpServer
                     {
                         app.Run(async context =>
                         {
-                            var routeTable = Config.RouteTable;
-                            RestMockCore.Models.RouteTableItem route = null;
-                            if (routeTable != null)
-                            {
-                                for (int i = routeTable.Count - 1; i >= 0; i--)
-                                {
-                                    var candidate = routeTable[i];
-                                    if (candidate.IsMatch(context.Request))
-                                    {
-                                        route = candidate;
-                                        break;
-                                    }
-                                }
-                            }
+                            var route = Config.RouteTable?.LastOrDefault(x => x.IsMatch(context.Request));
 
                             if (route == null)
                             {
@@ -56,7 +42,7 @@ public class HttpServer : IHttpServer
                             // and we can verify the route is going to be handled
                             route.IncrementCallCounter();
 
-                            if (route.Response.Handler != null)
+                            if (route.Response!.Handler != null)
                             {
                                 route.Response.Handler(context);
                                 return;
