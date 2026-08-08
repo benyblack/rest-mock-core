@@ -1,0 +1,25 @@
+name: ❓ Question
+description: "Ask how to do something with rest-mock-core. (For open-ended discussion, prefer GitHub Discussions instead.)"
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      content: |
+        For open-ended questions and "how do I…?" conversations, please use [GitHub Discussions](https://github.com/benyblack/rest-mock-core/discussions). Reserve this template for short, answerable questions that fit in a single issue thread.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      placeholder: e.g. How do I match a request body against a JSON payload?
+    validations:
+      required: true
+
+  - type: textarea
+    id: tried
+    attributes:
+      label: What have you already tried?
+      description: Show the code you wrote and what went wrong. This makes it much easier to answer.
+      render: csharp
+    validations:
+      required: false

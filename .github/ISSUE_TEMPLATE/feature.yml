@@ -1,0 +1,51 @@
+name: ✨ Feature request
+description: Propose a new feature or change in scope.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      content: |
+        Before opening a feature request, please skim [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md). `rest-mock-core` is intentionally small — features that push it toward WireMock-style scope will likely be declined. Bug fixes and small ergonomic improvements are always welcome.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: Explain the *why*. What are you doing today that's painful, and why is the existing API in the way?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What change are you proposing?
+      placeholder: |
+        Sketch the API surface, even if rough. e.g.:
+
+        ```csharp
+        server.Config.Get("/api/users/{id}").Send("ok");
+        // or
+        server.Config.Post("/api/orders").When(req => req.Body.Contains("draft")).Send(202);
+        ```
+    validations:
+      required: true
+
+  - type: dropdown
+    id: alternative
+    attributes:
+      label: Have you considered an alternative?
+      description: Sometimes a workaround in user code beats a new feature in the library.
+      options:
+        - "Yes — and the workaround is too painful; the library should support this"
+        - "Yes — and the workaround is fine; I just think this would be nicer"
+        - "No — this is the first thing I tried"
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Maintenance / dependency impact
+      description: Would this require a new third-party dependency, a runtime requirement, or a behavior change to existing callers?
+    validations:
+      required: false

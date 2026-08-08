@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/benyblack/rest-mock-core/discussions
+    about: For general questions, ideas, and "how do I…?" — please prefer Discussions for open-ended conversation.
+  - name: 🔒 Security issue
+    url: https://github.com/benyblack/rest-mock-core/security/advisories/new
+    about: Please report security issues privately via GitHub Security Advisories, not as a public issue.

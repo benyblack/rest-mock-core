@@ -1,0 +1,85 @@
+name: 🐛 Bug report
+description: Something is broken or behaves incorrectly.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      content: |
+        Thanks for filing a bug. Please fill in the sections below — a minimal reproduction makes fixing the issue 10× faster.
+
+  - type: dropdown
+    id: version
+    attributes:
+      label: rest-mock-core version
+      description: The version you get from `dotnet list package` or from the `.nupkg` filename.
+      options:
+        - "0.9.1 (latest)"
+        - "0.9.0"
+        - "0.8.0"
+        - "older"
+        - "not sure"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tfm
+    attributes:
+      label: Target framework
+      options:
+        - "net8.0"
+        - "net9.0"
+        - "net10.0"
+        - "other / not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+      placeholder: e.g. The mock should return 200 with body "hello".
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened?
+      placeholder: e.g. The mock throws VerificationException on the first call, or returns 404.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: Paste a single .cs file or a small repo. Drop the call to your real API and use `Config.Get(...).Send(...)` to show the behavior.
+      render: csharp
+      placeholder: |
+        using RestMockCore;
+        using System.Net.Http;
+        using System.Threading.Tasks;
+
+        public class Repro
+        {
+            public static async Task Main()
+            {
+                using var server = new HttpServer(5001);
+                server.Config.Get("/api").Send("ok", 200);
+                server.Run();
+
+                using var client = new HttpClient();
+                var response = await client.GetAsync("http://localhost:5001/api");
+                // → unexpected behavior here
+            }
+        }
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Stack trace / logs (optional)
+      render: shell
+    validations:
+      required: false
