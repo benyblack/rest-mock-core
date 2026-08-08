@@ -34,22 +34,22 @@ public class RequestHandler : IRequestHandler
         return Send("", HttpStatusCode.OK, null, context);
     }
 
-    public RouteTableItem Send(string body, int statusCode, Dictionary<string, string> headers)
+    public RouteTableItem Send(string body, int statusCode, Dictionary<string, string>? headers)
     {
         return Send(body, statusCode, headers, null);
     }
 
-    public RouteTableItem Send(string body, HttpStatusCode statusCode, Dictionary<string, string> headers)
+    public RouteTableItem Send(string body, HttpStatusCode statusCode, Dictionary<string, string>? headers)
     {
         return Send(body, statusCode, headers, null);
     }
 
-    public RouteTableItem Send(string body, int statusCode, Dictionary<string, string> headers, Action<HttpContext> context)
+    public RouteTableItem Send(string body, int statusCode, Dictionary<string, string>? headers, Action<HttpContext>? context)
     {
         return Send(body, (HttpStatusCode)statusCode, headers, context);
     }
 
-    public RouteTableItem Send(string body, HttpStatusCode statusCode, Dictionary<string, string> headers, Action<HttpContext> context)
+    public RouteTableItem Send(string body, HttpStatusCode statusCode, Dictionary<string, string>? headers, Action<HttpContext>? context)
     {
         Response = new HttpResponse() { Body = body, StatusCode = statusCode, Headers = headers, Handler = context };
         RouteTable.Response = Response;

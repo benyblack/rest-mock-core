@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
+using RestMockCore;
 
 namespace RestMockCore.Test.Models;
 public class RequestBuilderTest
@@ -143,7 +144,7 @@ public class RequestBuilderTest
         _requestBuilder.Put(_url).Send(responseString).Verifiable();
 
         // Act
-        var result = Assert.Throws<Exception>(() => _requestBuilder.VerifyAll());
+        var result = Assert.Throws<VerificationException>(() => _requestBuilder.VerifyAll());
 
         // Assert
         Assert.Equal("Route can not be verified", result.Message);

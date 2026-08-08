@@ -1,4 +1,5 @@
 ﻿using Moq;
+using RestMockCore;
 using RestMockCore.Models;
 using System;
 using System.Collections;
@@ -51,7 +52,7 @@ namespace RestMockCore.Test.Models
             route.CallCounter = 0;
 
             //Act
-            var exception = Assert.Throws<Exception>(() => route.Verify());
+            var exception = Assert.Throws<VerificationException>(() => route.Verify());
 
             //Assert
             Assert.Equal("Route can not be verified", exception.Message);
@@ -154,7 +155,7 @@ namespace RestMockCore.Test.Models
             route.CallCounter = _fixture.Create<int>();
 
             //Act
-            var exception = Assert.Throws<Exception>(() =>
+            var exception = Assert.Throws<VerificationException>(() =>
                 route.Verify(route.CallCounter + 1)
             );
 
@@ -171,7 +172,7 @@ namespace RestMockCore.Test.Models
             route.CallCounter = _fixture.Create<int>();
 
             //Act
-            var exception = Assert.Throws<Exception>(() =>
+            var exception = Assert.Throws<VerificationException>(() =>
                 route.Verify(x => Times.AtLeast(route.CallCounter + 1).Validate(x))
             );
 
@@ -188,7 +189,7 @@ namespace RestMockCore.Test.Models
             route.CallCounter = _fixture.Create<int>();
 
             //Act
-            var exception = Assert.Throws<Exception>(() => route.Verify(x => x < (route.CallCounter - 1)));
+            var exception = Assert.Throws<VerificationException>(() => route.Verify(x => x < (route.CallCounter - 1)));
 
             //Assert
             Assert.Equal("Route can not be verified", exception.Message);

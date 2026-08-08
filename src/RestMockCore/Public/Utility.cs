@@ -1,7 +1,7 @@
 ﻿namespace RestMockCore;
 public static class Utility
 {
-    public static bool HasAny<T>(this IEnumerable<T> data)
+    public static bool HasAny<T>(this IEnumerable<T>? data)
     {
         if (data == null) return false;
         // Fast path for collections that expose Count
@@ -11,7 +11,7 @@ public static class Utility
         return e.MoveNext();
     }
 
-    public static void AddRange(this IHeaderDictionary responseHeader, Dictionary<string, string> headers)
+    public static void AddRange(this IHeaderDictionary responseHeader, Dictionary<string, string>? headers)
     {
         if (headers == null || headers.Count == 0) return;
         foreach (var item in headers)

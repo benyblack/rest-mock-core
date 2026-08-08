@@ -5,13 +5,13 @@ namespace RestMockCore
 {
     public class RequestBuilder : IRequestBuilder
     {
-        public IRequestHandler Handler { get; set; }
+        public IRequestHandler Handler { get; set; } = null!;
 
         public List<RouteTableItem> RouteTable { get; }
 
         public RequestBuilder()
         {
-            Handler = new RequestHandler(null);
+            Handler = new RequestHandler(new RouteTableItem());
             RouteTable = new List<RouteTableItem>();
         }
 
@@ -40,7 +40,7 @@ namespace RestMockCore
             return Request(method, url, null);
         }
 
-        public IRequestHandler Request(string method, string url, Dictionary<string, string> headers)
+        public IRequestHandler Request(string method, string url, Dictionary<string, string>? headers)
         {
             if (!url.StartsWith("/"))
             {

@@ -9,6 +9,6 @@ public interface IRequestBuilder
     IRequestHandler Put(string url);
     IRequestHandler Delete(string url);
     IRequestHandler Request(string method, string url);
-    IRequestHandler Request(string method, string url, Dictionary<string, string> headers);
+    IRequestHandler Request(string method, string url, Dictionary<string, string>? headers);
     void VerifyAll();
 }

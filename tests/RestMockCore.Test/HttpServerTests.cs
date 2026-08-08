@@ -8,6 +8,7 @@ using Xunit;
 
 namespace RestMockCore.Test;
 
+[Collection(HttpServerCollection.Name)]
 public class HttpServerTests
 {
     private HttpServer _mockServer;
