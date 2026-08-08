@@ -272,3 +272,6 @@ lcov.info
 
 # Test coverage report files
 coveragereport/
+
+# Git worktrees (kept out of the repo to avoid checking in build outputs)
+.worktrees/
