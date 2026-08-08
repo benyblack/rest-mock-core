@@ -6,6 +6,19 @@ and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- `CONTRIBUTING.md` — contribution guide (workflow, scope rules, coding style).
+- `SECURITY.md` — supported versions and private disclosure process via GitHub Security Advisories.
+- Issue templates (`.github/ISSUE_TEMPLATE/`): bug report, feature request, question, plus a config that points users to Discussions for open-ended conversation.
+- `.github/CODEOWNERS` — auto-request review from the maintainer on all PRs.
+
+## [0.9.1] - 2026-08-08
+
+### Fixed
+- `dotnet pack` was emitting a "License missing" warning on 0.9.0. Set
+  `<PackageLicenseExpression>MIT</PackageLicenseExpression>` so the
+  SPDX expression is published and the warning goes away.
+
 ## [0.9.0] - 2026-08-07
 
 ### Changed

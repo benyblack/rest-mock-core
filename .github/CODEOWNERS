@@ -1,0 +1,9 @@
+# CODEOWNERS
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# Lines starting with `#` are comments. The last matching pattern wins.
+# Specify one or more GitHub users / teams that will be requested for review
+# when someone opens a pull request that touches the listed paths.
+
+# Default: the maintainer reviews everything.
+*       @benyblack
